@@ -1,0 +1,57 @@
+version: 2
+jobs:
+   build:
+      docker:
+        - image: circleci/ruby:2.5.1
+          environment:
+            POSTGRES_USER: postgres
+            PGHOST: 127.0.0.1
+            RAILS_ENV: test
+        - image: circleci/postgres:13.2
+          environment:
+            POSTGRES_USER: postgres
+            #パスワード入力省略でサーバーログイン
+            POSTGRES_HOST_AUTH_METHOD: trust
+            POSTGRES_DB: trainu_test
+      working_directory: ~/trainu
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "Gemfile.lock" }}
+              - v1-dependencies-
+
+        # bundle install
+        - run:
+            name: install dependencies
+            command: |
+              gem install bundler -v 1.16.6
+              bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+        # bundle キャッシュ保存
+        - save_cache:
+            key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+            paths:
+              - ./vendor/bundle
+
+        - run:
+            name: DB Wait for Start
+            command: dockerize -wait tcp://127.0.0.1:5432 -timeout 120s
+
+        - run: mv ./config/database.yml.ci ./config/database.yml
+
+        - run:
+            name: DBsetup
+            command: |
+              bundle exec rake db:create
+              bundle exec rake db:schema:load
+
+        # rubocop実行
+        - run:
+          name: Rubocop
+          command: bundle exec rubocop
+
+        # rspec実行
+        - run:
+            name: Run rspec
+            command: bundle exec rspec

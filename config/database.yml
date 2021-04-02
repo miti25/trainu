@@ -10,7 +10,6 @@ development:
   <<: *default
   database: trainu_development
 
-
 test:
   <<: *default
   database: trainu_test
