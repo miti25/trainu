@@ -2,7 +2,7 @@ test:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: 'root'
-  port: 3306
+  username: 'postgres'
+  port: 5432
   host: '127.0.0.1'
   database: trainu_test
