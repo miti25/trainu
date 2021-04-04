@@ -1,0 +1,38 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 2.5.1
+  TargetRailsVersion: 5.2.5
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+
+Rails:
+  Enabled: true
+
+# 日本語コメントの許可
+Style/AsciiComments:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# ドキュメントないclass module
+Style/Documentation:
+  Enabled: false
+
+# 数字の _ による区切り
+Style/NumericLiterals:
+  Enabled: false
+
+# gemのインストール順
+Bundler/OrderedGems:
+  Enabled: false
+
+# classの記述形式をネスト、コンパクトで指定しない
+ClassAndModuleChildren:
+  Enabled: false
