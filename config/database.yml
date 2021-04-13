@@ -14,3 +14,6 @@ development:
 test:
   <<: *default
   database: trainu_test
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>
