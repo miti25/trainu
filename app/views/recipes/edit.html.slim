@@ -1,0 +1,7 @@
+h1
+  = @recipe.name
+
+.nav.justify-content-end
+  = link_to 'レシピ一覧', recipes_path, class: 'nav-link'
+
+= render partial: "form", locals: {recipe: @recipe}

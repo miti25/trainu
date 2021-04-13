@@ -1,0 +1,23 @@
+h1
+  = @recipe.name
+
+.nav.justify-content-end
+  = link_to 'レシピ一覧', recipes_path, class: 'nav-link'
+
+table.table.table-hover.text-break
+  tbody
+    tr
+      th= Recipe.human_attribute_name(:name)
+      td= @recipe.name
+    tr
+      th= Recipe.human_attribute_name(:description)
+      td= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
+    tr
+      th= Recipe.human_attribute_name(:created_at)
+      td= @recipe.created_at
+    tr
+      th= Recipe.human_attribute_name(:updated_at)
+      td= @recipe.updated_at
+
+= link_to "編集", edit_recipe_path, class: 'btn btn-primary mr-3'
+= link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
