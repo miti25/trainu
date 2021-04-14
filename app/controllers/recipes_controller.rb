@@ -12,9 +12,12 @@ class RecipesController < ApplicationController
   end
 
   def create
-    recipe = Recipe.new(recipe_params)
-    recipe.save
-    redirect_to recipes_url, notice: 'レシピを登録しました'
+    @recipe = Recipe.new(recipe_params)
+    if @recipe.save
+      redirect_to @task, notice: 'レシピを登録しました'
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -28,9 +31,12 @@ class RecipesController < ApplicationController
   end
 
   def update
-    recipe = Recipe.find(params[:id])
-    recipe.update!(recipe_params)
-    redirect_to recipe_url, notice: 'レシピを更新しました'
+    @recipe = Recipe.find(params[:id])
+    if @recipe.update(recipe_params)
+      redirect_to recipe_url, notice: 'レシピを更新しました'
+    else
+      render :edit
+    end
   end
 
   private
