@@ -2,14 +2,14 @@ doctype html
 html
   head
     title
-      | trainu
+      = full_title(yield(:title))
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
-      .navbar-brand trainu
+      = link_to 'trainu', root_path, class: 'navbar-brand'
     .container
       - if flash.notice.present?
         .alert.alert-success= flash.notice
