@@ -7,14 +7,23 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
-  models:
-    recipe: レシピ
+    models:
+      recipe: レシピ
+      user: ユーザー
+    attributes:
+      recipe:
+        id: ID
+        name: レシピ名
+        description: 説明
+        image: 画像
+      user:
+        id: ID
+        name: 名前
   attributes:
-    recipe:
-    id: ID
-    name: レシピ名
-    description: 説明
-    image: 画像
+    admin: 管理者権限
+    email: メールアドレス
+    password: パスワード
+    password_confirmation: パスワード（確認）
     created_at: 登録日時
     updated_at: 更新日時
   date:
