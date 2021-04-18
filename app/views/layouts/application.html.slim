@@ -10,6 +10,14 @@ html
   body
     .app-title.navbar.navbar-expand-md.navbar-light.bg-light
       = link_to 'trainu', root_path, class: 'navbar-brand'
+
+      ul.navbar-nav.ml-auto
+        - if current_user
+          li.nav-item= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
+          li.nav-item= link_to 'レシピ一覧', recipes_path, class: 'nav-link'
+          li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+        - else
+          li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
     .container
       - if flash.notice.present?
         .alert.alert-success= flash.notice
