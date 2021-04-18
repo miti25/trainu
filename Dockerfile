@@ -2,8 +2,8 @@ FROM ruby:2.5.8
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN mkdir /trainu
 WORKDIR /trainu
-COPY Gemfile /trainu/Gemfile
-COPY Gemfile.lock /trainu/Gemfile.lock
+COPY Gemfile /trainu
+COPY Gemfile.lock /trainu
 RUN bundle install
 COPY . /trainu
 
