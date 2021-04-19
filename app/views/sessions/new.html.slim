@@ -1,8 +1,4 @@
 h1 ログイン
-/ - if .errors.present?
-  / ul#error_explanation
-    / - recipe.errors.full_messages.each do |message|
-      / li= message
 
 = form_with scope: :session, local: true do |f|
   .form-group
