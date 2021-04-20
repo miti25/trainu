@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required, only: %i[new create]
+  before_action :require_admin, except: %i[new create]
 
   def index
     @users = User.all
@@ -45,5 +46,9 @@ class Admin::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
+  end
+
+  def require_admin
+    redirect_to root_path unless current_user.admin?
   end
 end
