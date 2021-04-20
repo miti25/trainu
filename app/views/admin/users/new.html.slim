@@ -1,6 +1,3 @@
 h1 ユーザー登録
 
-.nav.justify-content-end
-  = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
-
 = render partial: '/shared/user_form', locals: { user: @user }
