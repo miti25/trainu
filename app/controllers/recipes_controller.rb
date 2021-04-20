@@ -1,11 +1,10 @@
 class RecipesController < ApplicationController
   def index
-    @recipes = current_user.recipes
+    @recipes = current_user.recipes.recent
   end
 
   def show
-    # @recipe = Recipe.where(user_id: current_user.id) 下記同義
-    @recipe = current_user.recipes.find(params[:id])
+    set_recipe
   end
 
   def new
@@ -15,26 +14,26 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.new(recipe_params)
     if @recipe.save
-      redirect_to @task, notice: 'レシピを登録しました'
+      redirect_to @recipe, notice: "レシピ「#{@recipe.name}」を登録しました"
     else
       render :new
     end
   end
 
   def destroy
-    recipe = current_user.recipes.find(params[:id])
-    recipe.destroy
-    redirect_to recipes_url, notice: "#{recipe.name}を削除しました"
+    set_recipe
+    @recipe.destroy
+    redirect_to recipes_url, notice: "レシピ「#{@recipe.name}」を削除しました"
   end
 
   def edit
-    @recipe = current_user.recipes.find(params[:id])
+    set_recipe
   end
 
   def update
-    @recipe = current_user.recipes.find(params[:id])
+    set_recipe
     if @recipe.update(recipe_params)
-      redirect_to recipe_url, notice: 'レシピを更新しました'
+      redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
       render :edit
     end
@@ -44,5 +43,10 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image)
+  end
+
+  def set_recipe
+    # @recipe = Recipe.where(user_id: current_user.id) 下記同義
+    @recipe = current_user.recipes.find(params[:id])
   end
 end

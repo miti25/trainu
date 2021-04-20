@@ -3,4 +3,6 @@ class Recipe < ApplicationRecord
   validates :description, length: { maximum: 200 }
 
   belongs_to :user
+
+  scope :recent, -> { order(created_at: :desc) }
 end
