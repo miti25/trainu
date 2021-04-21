@@ -20,5 +20,6 @@ table.table.table-hover.text-break
       th= Recipe.human_attribute_name(:updated_at)
       td= @recipe.updated_at
 
-= link_to "編集", edit_recipe_path, class: 'btn btn-primary mr-3'
-= link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+- if admin_or_himself?
+  = link_to "編集", edit_recipe_path, class: 'btn btn-primary mr-3'
+  = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'

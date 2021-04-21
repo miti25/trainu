@@ -1,10 +1,12 @@
 class RecipesController < ApplicationController
+  before_action :require_admin_or_himself, only: %i[edit destroy update]
+
   def index
     @recipes = current_user.recipes.recent
   end
 
   def show
-    set_recipe
+    @recipe = Recipe.find(params[:id])
   end
 
   def new
@@ -46,7 +48,12 @@ class RecipesController < ApplicationController
   end
 
   def set_recipe
-    # @recipe = Recipe.where(user_id: current_user.id) 下記同義
-    @recipe = current_user.recipes.find(params[:id])
+    @recipe = Recipe.find(params[:id])
+  end
+
+  def owned_user?
+    recipe = Recipe.find(params[:id])
+    user = recipe.user
+    current_user.id == user.id
   end
 end
