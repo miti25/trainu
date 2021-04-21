@@ -26,3 +26,9 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - chrome
+  chrome:
+    image: selenium/standalone-chrome-debug:latest
+    ports:
+      - 4444:4444
+      - 5900:5900
