@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :login_required
-
-  def home; end
+  def home
+    @recipes = current_user.recipes
+  end
 end

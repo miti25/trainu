@@ -14,8 +14,10 @@ html
       ul.navbar-nav.ml-auto
         - if current_user
           - if current_user.admin?
-            li.nav-item.mt-2= '管理者'
+            li.nav-item.mt-2.mr-2= '|'
+            li.nav-item.mt-2= '管理者メニュー'
             li.nav-item= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
+            li.nav-item.mt-2.mr-3= '|'
           li.nav-item= link_to "#{current_user.name}さん", admin_user_path(current_user), class: 'nav-link'
           li.nav-item= link_to 'レシピ一覧', recipes_path, class: 'nav-link'
           li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
