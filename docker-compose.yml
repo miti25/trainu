@@ -19,11 +19,17 @@ services:
     volumes:
       - .:/trainu:cached
       - /trainu/vendor
-      - /trainu/tmp
+      - /trainu/tmp/chache
+      - /trainu/tmp/db
+      - /trainu/tmp/pids
+      - /trainu/tmp/sockets
+      - /trainu/tmp/storage
       - /trainu/log
       - /trainu/.git
     ports:
       - "3000:3000"
+    environment:
+      - "SELENIUM_DRIVER_URL=http://chrome:4444/wd/hub"
     depends_on:
       - db
       - chrome
