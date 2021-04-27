@@ -1,6 +1,8 @@
 class Admin::UsersController < ApplicationController
-  skip_before_action :login_required, only: %i[new create]
-  before_action :require_admin_or_himself, only: %i[edit update destroy]
+  include SessionsHelper
+
+  skip_before_action :login_required, only: %i[show new create]
+  before_action :require_admin_or_himself, only: %i[edit update destory]
 
   def index
     @users = User.all
@@ -17,6 +19,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in(@user)
       redirect_to admin_user_path(@user), notice: "ユーザー「#{@user.name}」を登録しました"
     else
       render :new
@@ -30,7 +33,7 @@ class Admin::UsersController < ApplicationController
   def update
     set_user
     if @user.update(user_params)
-      redirect_to admin_user_url notice: "ユーザー「#{@user.name}を更新しました"
+      redirect_to admin_user_url, notice: "ユーザー「#{@user.name}を更新しました"
     else
       render :new
     end
@@ -39,7 +42,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     set_user
     @user.destroy
-    redirect_to admin_users_url notice: "ユーザー「#{@user.name}」を削除しました"
+    redirect_to root_path, notice: "ユーザー「#{@user.name}」を削除しました"
   end
 
   private
