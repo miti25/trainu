@@ -79,11 +79,11 @@ describe 'ユーザーの管理機能', type: :system do
         expect do
           expect(page.accept_confirm).to eq "ユーザー「#{user_a.name}」を削除します、よろしいですか？"
           expect(page).to have_content "ユーザー「#{user_a.name}」を削除しました"
-        end.to change{ User.count }.by(-1)
+        end.to change(User, :count).by(-1)
       end
 
       it '紐付いたレシピも削除される' do
-        expect{ user_a.destroy }.to change{ Recipe.count }.by(-1)
+        expect { user_a.destroy }.to change(Recipe, :count).by(-1)
       end
     end
     context 'ユーザーAがログインしている場合' do

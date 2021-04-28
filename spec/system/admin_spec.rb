@@ -4,6 +4,7 @@ describe '管理者権限' do
   let(:user_a) { create(:user, name: 'ユーザーA', email: 'a@email.com') }
   let(:user_admin) { create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
   let!(:recipe_a) { create(:recipe, user: user_a, name: 'Aのレシピ１') }
+
   before do
     visit login_path
     fill_in 'メールアドレス', with: login_user.email
@@ -19,6 +20,7 @@ describe '管理者権限' do
         before do
           visit admin_user_path(user_a)
         end
+
         it 'ユーザー詳細が表示される' do
           expect(page).to have_content user_a.name
         end
@@ -35,18 +37,17 @@ describe '管理者権限' do
           expect do
             expect(page.accept_confirm).to eq "ユーザー「#{user_a.name}」を削除します、よろしいですか？"
             expect(page).to have_content "ユーザー「#{user_a.name}」を削除しました"
-          end.to change{ User.count }.by(-1)
+          end.to change(User, :count).by(-1)
         end
 
         it '紐付いたレシピも削除される' do
-          expect{ user_a.destroy }.to change{ Recipe.count }.by(-1)
+          expect { user_a.destroy }.to change(Recipe, :count).by(-1)
         end
       end
     end
   end
 
   describe 'adminのレシピの管理機能', type: :system do
-
     describe 'レシピ詳細表示' do
       context 'adminがログインしている場合' do
         let(:login_user) { user_admin }
