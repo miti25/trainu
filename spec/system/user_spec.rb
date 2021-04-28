@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'ユーザーの管理機能', type: :system do
   describe 'サインイン', js: true do
-    let(:new_user) { FactoryBot.build(:user) }
-    let(:blank_user) { FactoryBot.build(:user, name: '', email: '', password: '') }
-    let(:no_confirmation) { FactoryBot.build(:user, password_confirmation: 'error_pass') }
+    let(:new_user) { build(:user) }
+    let(:blank_user) { build(:user, name: '', email: '', password: '') }
+    let(:no_confirmation) { build(:user, password_confirmation: 'error_pass') }
 
     before do
       visit new_admin_user_path
@@ -50,11 +50,10 @@ describe 'ユーザーの管理機能', type: :system do
   end
 
   describe '詳細表示' do
-    let(:user_a) { FactoryBot.create(:user, name: 'ユーザーA', email: 'a@email.com') }
-    let(:user_b) { FactoryBot.create(:user, name: 'ユーザーB', email: 'b@email.com') }
-    let(:user_admin) { FactoryBot.create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
-    let!(:recipe_a) { FactoryBot.create(:recipe, user: user_a, name: 'Aのレシピ１') }
-    let!(:recipe_b) { FactoryBot.create(:recipe, user: user_b, name: 'Bのレシピ１') }
+    let(:user_a) { create(:user, name: 'ユーザーA', email: 'a@email.com') }
+    let(:user_b) { create(:user, name: 'ユーザーB', email: 'b@email.com') }
+    let(:user_admin) { create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
+    let!(:recipe_a) { create(:recipe, user: user_a, name: 'Aのレシピ１') }
 
     before do
       visit login_path
@@ -65,7 +64,7 @@ describe 'ユーザーの管理機能', type: :system do
 
     shared_examples_for 'Aのユーザー操作がすべて機能する' do
       it 'ユーザー詳細が表示される' do
-        expect(page).to have_content user_a.name.to_s
+        expect(page).to have_content user_a.name
       end
 
       it '編集へのリンクが機能する' do
@@ -80,7 +79,11 @@ describe 'ユーザーの管理機能', type: :system do
         expect do
           expect(page.accept_confirm).to eq "ユーザー「#{user_a.name}」を削除します、よろしいですか？"
           expect(page).to have_content "ユーザー「#{user_a.name}」を削除しました"
-        end.to change(User, :count).by(-1)
+        end.to change{ User.count }.by(-1)
+      end
+
+      it '紐付いたレシピも削除される' do
+        expect{ user_a.destroy }.to change{ Recipe.count }.by(-1)
       end
     end
     context 'ユーザーAがログインしている場合' do
@@ -100,7 +103,7 @@ describe 'ユーザーの管理機能', type: :system do
         end
 
         it 'ユーザーBの詳細が表示される' do
-          expect(page).to have_content user_b.name.to_s
+          expect(page).to have_content user_b.name
         end
 
         it '編集へのリンクが機能しない' do
@@ -113,18 +116,6 @@ describe 'ユーザーの管理機能', type: :system do
         it '削除へのリンク表示されない' do
           expect(page).not_to have_link '削除'
         end
-      end
-    end
-
-    context 'adminがログインしている場合' do
-      let(:login_user) { user_admin }
-
-      context 'ユーザーAの詳細ページにて' do
-        before do
-          visit admin_user_path(user_a)
-        end
-
-        it_behaves_like 'Aのユーザー操作がすべて機能する'
       end
     end
   end

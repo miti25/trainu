@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 describe 'レシピの管理機能', type: :system do
-  let(:user_a) { FactoryBot.create(:user, name: 'ユーザーA', email: 'a@email.com') }
-  let(:user_b) { FactoryBot.create(:user, name: 'ユーザーB', email: 'b@email.com') }
-  let(:user_admin) { FactoryBot.create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
-  let!(:recipe_a) { FactoryBot.create(:recipe, user: user_a, name: 'Aのレシピ１') }
-  let!(:recipe_b) { FactoryBot.create(:recipe, user: user_b, name: 'Bのレシピ１') }
+  let(:user_a) { create(:user, name: 'ユーザーA', email: 'a@email.com') }
+  let(:user_b) { create(:user, name: 'ユーザーB', email: 'b@email.com') }
+  let!(:recipe_a) { create(:recipe, user: user_a, name: 'Aのレシピ１') }
+  let!(:recipe_b) { create(:recipe, user: user_b, name: 'Bのレシピ１') }
 
   before do
     visit login_path
@@ -19,7 +18,7 @@ describe 'レシピの管理機能', type: :system do
       let(:login_user) { user_a }
 
       it 'ユーザーAの作成したレシピが表示される' do
-        expect(page).to have_content recipe_a.name.to_s
+        expect(page).to have_content recipe_a.name
       end
     end
 
@@ -27,15 +26,15 @@ describe 'レシピの管理機能', type: :system do
       let(:login_user) { user_b }
 
       it 'ユーザーBのレシピは表示されるがユーザーAのレシピは表示されない' do
-        expect(page).to have_content recipe_b.name.to_s
-        expect(page).not_to have_content recipe_a.name.to_s
+        expect(page).to have_content recipe_b.name
+        expect(page).not_to have_content recipe_a.name
       end
     end
   end
 
   shared_examples_for 'Aのレシピ操作がすべて機能する' do
     it '作成したレシピ詳細が表示される' do
-      expect(page).to have_content recipe_a.name.to_s
+      expect(page).to have_content recipe_a.name
     end
 
     it '編集へのリンクが機能する' do
@@ -72,7 +71,7 @@ describe 'レシピの管理機能', type: :system do
         end
 
         it 'ユーザーBの作成したレシピが表示される' do
-          expect(page).to have_content recipe_b.name.to_s
+          expect(page).to have_content recipe_b.name
         end
 
         it '編集へのリンクが機能しない' do
@@ -84,18 +83,6 @@ describe 'レシピの管理機能', type: :system do
         it '削除へのリンク表示されない' do
           expect(page).not_to have_link '削除'
         end
-      end
-    end
-
-    context 'adminがログインしている場合' do
-      let(:login_user) { user_admin }
-
-      context 'Aのレシピ詳細ページにて' do
-        before do
-          visit recipe_path(recipe_a)
-        end
-
-        it_behaves_like 'Aのレシピ操作がすべて機能する'
       end
     end
   end
