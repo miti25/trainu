@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   include SessionsHelper
 
   skip_before_action :login_required, only: %i[show new create]
-  before_action :require_admin_or_himself, only: %i[edit update destory]
+  before_action :require_admin_or_himself, only: %i[edit update destroy]
 
   def index
     @users = User.all

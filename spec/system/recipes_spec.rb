@@ -115,7 +115,7 @@ describe 'レシピの管理機能', type: :system do
       end
 
       context 'レシピ名が長過ぎる時' do
-        let!(:recipe_name) { 'a' * 31 }
+        let(:recipe_name) { 'a' * 31 }
 
         it 'エラー' do
           within '#error_explanation' do

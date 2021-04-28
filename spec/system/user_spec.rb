@@ -53,7 +53,6 @@ describe 'ユーザーの管理機能', type: :system do
     let(:user_a) { create(:user, name: 'ユーザーA', email: 'a@email.com') }
     let(:user_b) { create(:user, name: 'ユーザーB', email: 'b@email.com') }
     let(:user_admin) { create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
-    let!(:recipe_a) { create(:recipe, user: user_a, name: 'Aのレシピ１') }
 
     before do
       visit login_path
@@ -83,6 +82,7 @@ describe 'ユーザーの管理機能', type: :system do
       end
 
       it '紐付いたレシピも削除される' do
+        create(:recipe, user: user_a)
         expect { user_a.destroy }.to change(Recipe, :count).by(-1)
       end
     end

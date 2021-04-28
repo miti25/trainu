@@ -36,3 +36,32 @@ Bundler/OrderedGems:
 # classの記述形式をネスト、コンパクトで指定しない
 ClassAndModuleChildren:
   Enabled: false
+
+# let subjectの個数制限
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+#specファイル先頭のdescribeが定数であること
+RSpec/DescribeClass:
+  Enabled: false
+
+#contextに使用される語が規定のものであること
+RSpec/ContextWording:
+  Enabled: false
+
+#テスト条件のネスト制限
+RSpec/NestedGroups:
+  Max: 4
+
+#expectの個数制限
+RSpec/MultipleExpectations:
+  Max: 4
+
+#行数の長さ制限
+RSpec/ExampleLength:
+  Max: 7
+
+#let subjectの個数制限
+RSpec/MultipleMemoizedHelpers:
+  Max: 6
