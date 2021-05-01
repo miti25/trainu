@@ -85,3 +85,5 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+# During the cache time, Webdrivers won't check to update Chrome.
+Webdrivers.cache_time = 1.month.to_i
