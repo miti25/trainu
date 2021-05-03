@@ -5,7 +5,7 @@ h1 = "#{@user.name}"
 
 table.table.table-hover
   tbody
-    - if current_user.admin?
+    - if current_user&.admin?
       tr
         th= User.human_attribute_name(:admin)
         td= @user.admin? ? '有' : '無'
