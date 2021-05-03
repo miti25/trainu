@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   before_action :require_admin_or_himself, only: %i[edit destroy update]
+  skip_before_action :login_required, only: %i[show search]
 
   def index
     @recipes = current_user.recipes.recent
@@ -41,6 +42,9 @@ class RecipesController < ApplicationController
     end
   end
 
+  def search
+  end
+
   private
 
   def recipe_params
@@ -54,6 +58,6 @@ class RecipesController < ApplicationController
   def owned_user?
     recipe = Recipe.find(params[:id])
     user = recipe.user
-    current_user.id == user.id
+    current_user&.id == user.id
   end
 end

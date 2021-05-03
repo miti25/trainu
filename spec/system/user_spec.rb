@@ -54,49 +54,7 @@ describe 'ユーザーの管理機能', type: :system do
     let(:user_b) { create(:user, name: 'ユーザーB', email: 'b@email.com') }
     let(:user_admin) { create(:user, name: 'admin', email: 'admin@email.com', admin: true) }
 
-    before do
-      visit login_path
-      fill_in 'メールアドレス', with: login_user.email
-      fill_in 'パスワード', with: login_user.password
-      click_button 'ログイン'
-    end
-
-    shared_examples_for 'Aのユーザー操作がすべて機能する' do
-      it 'ユーザー詳細が表示される' do
-        expect(page).to have_content user_a.name
-      end
-
-      it '編集へのリンクが機能する' do
-        expect(page).to have_link '編集'
-        click_on '編集'
-        expect(page).to have_current_path edit_admin_user_path(user_a), ignore_query: true
-      end
-
-      it '削除へのリンクが機能する', js: true do
-        expect(page).to have_link '削除'
-        click_link '削除'
-        expect do
-          expect(page.accept_confirm).to eq "ユーザー「#{user_a.name}」を削除します、よろしいですか？"
-          expect(page).to have_content "ユーザー「#{user_a.name}」を削除しました"
-        end.to change(User, :count).by(-1)
-      end
-
-      it '紐付いたレシピも削除される' do
-        create(:recipe, user: user_a)
-        expect { user_a.destroy }.to change(Recipe, :count).by(-1)
-      end
-    end
-    context 'ユーザーAがログインしている場合' do
-      let(:login_user) { user_a }
-
-      context 'ユーザーAの詳細ページにて' do
-        before do
-          visit admin_user_path(user_a)
-        end
-
-        it_behaves_like 'Aのユーザー操作がすべて機能する'
-      end
-
+    describe '非ログイン時' do
       context 'ユーザーBの詳細ページにて' do
         before do
           visit admin_user_path(user_b)
@@ -109,12 +67,73 @@ describe 'ユーザーの管理機能', type: :system do
         it '編集へのリンクが機能しない' do
           expect(page).not_to have_link '編集'
           visit edit_admin_user_path(user_b)
-          expect(page).to have_no_current_path edit_admin_user_path(user_b), ignore_query: true
-          expect(page).to have_current_path root_path, ignore_query: true
+          expect(page).to have_current_path login_path, ignore_query: true
         end
 
         it '削除へのリンク表示されない' do
           expect(page).not_to have_link '削除'
+        end
+      end
+    end
+    describe 'ログイン時' do
+      before do
+        visit login_path
+        fill_in 'メールアドレス', with: login_user.email
+        fill_in 'パスワード', with: login_user.password
+        click_button 'ログイン'
+      end
+
+      context 'ユーザーAがログインしている場合' do
+        let(:login_user) { user_a }
+
+        context 'ユーザーAの詳細ページにて' do
+          before do
+            visit admin_user_path(user_a)
+          end
+
+          it 'ユーザー詳細が表示される' do
+            expect(page).to have_content user_a.name
+          end
+
+          it '編集へのリンクが機能する' do
+            expect(page).to have_link '編集'
+            click_on '編集'
+            expect(page).to have_current_path edit_admin_user_path(user_a), ignore_query: true
+          end
+
+          it '削除へのリンクが機能する', js: true do
+            expect(page).to have_link '削除'
+            click_link '削除'
+            expect do
+              expect(page.accept_confirm).to eq "ユーザー「#{user_a.name}」を削除します、よろしいですか？"
+              expect(page).to have_content "ユーザー「#{user_a.name}」を削除しました"
+            end.to change(User, :count).by(-1)
+          end
+
+          it '紐付いたレシピも削除される' do
+            create(:recipe, user: user_a)
+            expect { user_a.destroy }.to change(Recipe, :count).by(-1)
+          end
+        end
+
+        context 'ユーザーBの詳細ページにて' do
+          before do
+            visit admin_user_path(user_b)
+          end
+
+          it 'ユーザーBの詳細が表示される' do
+            expect(page).to have_content user_b.name
+          end
+
+          it '編集へのリンクが機能しない' do
+            expect(page).not_to have_link '編集'
+            visit edit_admin_user_path(user_b)
+            expect(page).to have_current_path root_path, ignore_query: true
+          end
+
+          it '削除へのリンク表示されない' do
+            expect(page).not_to have_link '削除'
+          end
         end
       end
     end

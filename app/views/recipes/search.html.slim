@@ -1,0 +1,14 @@
+h1 検索結果
+
+table.table.table-hover.text-break
+  thead.thead-default
+    tr
+      th= sort_link(@q, :name)
+      th= sort_link(@q, :created_at)
+      th
+  tbody
+    - @search_recipes.each do |recipe|
+      tr
+        td= link_to recipe.name, recipe_path(recipe)
+        td= recipe.created_at
+    end

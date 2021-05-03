@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   end
 
   root 'pages#home'
-  resources :recipes
+  resources :recipes do
+    collection do
+      get 'search'
+    end
+  end
 end
