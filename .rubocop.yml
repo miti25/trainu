@@ -52,7 +52,7 @@ RSpec/ContextWording:
 
 #テスト条件のネスト制限
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 
 #expectの個数制限
 RSpec/MultipleExpectations:

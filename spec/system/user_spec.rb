@@ -75,6 +75,7 @@ describe 'ユーザーの管理機能', type: :system do
         end
       end
     end
+
     describe 'ログイン時' do
       before do
         visit login_path

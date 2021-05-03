@@ -27,6 +27,7 @@ describe 'レシピの管理機能', type: :system do
       end
     end
   end
+
   describe 'ログイン時' do
     before do
       visit login_path
@@ -55,7 +56,6 @@ describe 'レシピの管理機能', type: :system do
     end
 
     describe '詳細表示' do
-
       context 'ユーザーAがログインしている場合' do
         let(:login_user) { user_a }
 

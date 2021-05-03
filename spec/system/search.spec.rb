@@ -17,7 +17,7 @@ describe '検索機能', type: :system, js: true do
     end
 
     it 'Aの含まれるレシピが表示される' do
-      expect(page).to have_content 'A'
+      expect(page).to have_content recipe_a.name
     end
 
     it 'Aの含まれないレシピは表示されない' do

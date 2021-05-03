@@ -4,7 +4,7 @@ table.table.table-hover.text-break
   thead.thead-default
     tr
       th= sort_link(@q, :name)
-      th= sort_link(@q, :created_at)
+      th= sort_link(@q, created_at)
       th
   tbody
     - @search_recipes.each do |recipe|
