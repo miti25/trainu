@@ -6,10 +6,7 @@ h1 検索結果
   .row.mb-4
     .col-sm-3
       .thumbnail
-        -if recipe.image.attached?
-          = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
-        -else
-          p.no-image
+        = render partial: 'image/thumbnail', locals: { recipe: recipe }
     .col-sm-9
       .row.mb-3
         h3= link_to recipe.name, recipe_path(recipe)

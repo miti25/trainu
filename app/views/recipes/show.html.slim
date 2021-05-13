@@ -9,10 +9,6 @@
         = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
   .row
     .col-sm-3
-      .thumbnail
-        - if @recipe.image.attached?
-          = image_tag @recipe.thumbnail
-        -else
-          p.no-image
+      = render partial: 'image/thumbnail', locals: { recipe: @recipe }
     .col-sm-5= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
     .col-sm-4= 'Category'
