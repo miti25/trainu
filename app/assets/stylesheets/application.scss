@@ -1,4 +1,15 @@
 @import "bootstrap";
+  .thumbnail{
+    display: block;
+    width: 200px;
+    height: 300px;
+    .no-image{
+      background-color: lightgray;
+      display: block;
+      width: 200px;
+      height: 300px;
+    }
+  }
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.

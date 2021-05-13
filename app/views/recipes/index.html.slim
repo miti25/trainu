@@ -1,19 +1,24 @@
 h1 レシピ一覧
 
+.btn= sort_link(@q, :name, default_order: :desc)
+
+- @recipes.each do |recipe|
+  .row.mb-4.search
+    .col-sm-3
+      .thumbnail
+        - if recipe.image.attached?
+          = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
+        - else
+          p.no-image
+    .col-sm-7
+      .row.mb-3
+        h3= link_to recipe.name, recipe_path(recipe), class: 'recipe_link'
+        .align-self-center.ml-2= link_to "by #{recipe.user.name}", admin_user_path(recipe.user), class: 'user_link'
+      .row
+        = recipe.description
+    .col-sm-2
+      = link_to '編集', edit_recipe_path(recipe), class: 'btn btn-primary mr-3'
+      = link_to '削除', recipe, method: :delete, data: { confirm: "#{recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
+end
+
 = link_to '新規登録', new_recipe_path, class: 'btn btn-primary'
-.mb-3
-table.table.table-hover.text-break
-  thead.thead-default
-    tr
-      th= Recipe.human_attribute_name(:name)
-      th= Recipe.human_attribute_name(:created_at)
-      th
-  tbody
-    - @recipes.each do |recipe|
-      tr
-        td= link_to recipe.name, recipe_path(recipe)
-        td= recipe.created_at
-        td
-          = link_to '編集', edit_recipe_path(recipe), class: 'btn btn-primary mr-3'
-          = link_to '削除', recipe, method: :delete, data: { confirm: "#{recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
-    end
