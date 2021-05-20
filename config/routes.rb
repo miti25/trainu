@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
-
   root 'pages#home'
   resources :recipes do
+    resources :howtos, only: [:create, :update, :destroy]
     collection do
       get 'search'
     end

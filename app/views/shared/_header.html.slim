@@ -6,7 +6,8 @@
       - if current_user
         - if current_user&.admin?
           li.nav-item= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
-        li.nav-item= link_to "マイページ", admin_user_path(current_user), class: 'nav-link'
+        li.nav-item= link_to 'レシピ作成', new_recipe_path, class: 'nav-link'
+        li.nav-item= link_to 'マイページ', admin_user_path(current_user), class: 'nav-link'
         li.nav-item= link_to 'レシピ一覧', recipes_path, class: 'nav-link'
         li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
       - else

@@ -1,6 +1,11 @@
 h1 レシピ作成
 
-.nav.justify-content-end
-  = link_to 'レシピ一覧', recipes_path, class: 'nav-link'
+- if @recipe.errors.present?
+  ul#error_explanation
+    - @recipe.errors.full_messages.each do |message|
+      li= message
 
-= render partial: "form", locals: {recipe: @recipe}
+.mt-5
+  = form_with model: [@recipe], local: true do |f|
+    = f.text_field :name, class: 'form-control', placeholder: 'レシピ名を入力'
+    .text-center= f.submit 'レシピ詳細作成へ', class: 'btn btn-primary mt-5'

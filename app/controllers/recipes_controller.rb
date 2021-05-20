@@ -8,6 +8,8 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
+    @howtos = @recipe.howtos
+    @howto = Howto.new
   end
 
   def new
@@ -17,7 +19,9 @@ class RecipesController < ApplicationController
   def create
     @recipe = current_user.recipes.new(recipe_params)
     if @recipe.save
-      redirect_to @recipe, notice: "レシピ「#{@recipe.name}」を登録しました"
+      Howto.create(recipe_id: @recipe.id)
+      session[:howtos_ids] = @recipe.howtos.ids
+      redirect_to edit_recipe_path(@recipe)
     else
       render :new
     end
@@ -26,16 +30,22 @@ class RecipesController < ApplicationController
   def destroy
     set_recipe
     @recipe.destroy
+    session.delete(:howtos_ids)
     redirect_to recipes_url, notice: "レシピ「#{@recipe.name}」を削除しました"
   end
 
   def edit
     set_recipe
+    @howtos = @recipe.howtos
+    @howto = Howto.new
+    session[:howtos_ids] ||= @howtos.ids
   end
 
   def update
     set_recipe
     if @recipe.update(recipe_params)
+      Howto.where(id: session[:howtos_ids]).order(['field(id, ?)', session[:howtos_ids]])
+      session.delete(:howtos_ids)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
       render :edit

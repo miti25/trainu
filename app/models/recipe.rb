@@ -2,6 +2,7 @@ class Recipe < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30 }
   validates :description, length: { maximum: 200 }
   belongs_to :user
+  has_many :howtos, dependent: :destroy
   has_one_attached :image
   scope :recent, -> { order(created_at: :desc) }
 

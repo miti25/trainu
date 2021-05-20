@@ -1,7 +1,33 @@
-h1
-  = @recipe.name
 
-.nav.justify-content-end
-  = link_to 'レシピ一覧', recipes_path, class: 'nav-link'
+- if @recipe.errors.present?
+  ul#error_explanation
+    - @recipe.errors.full_messages.each do |message|
+      li= message
 
-= render partial: "form", locals: {recipe: @recipe}
+.container
+  = form_with model: @recipe, local: true do |f|
+    .row.col-sm-3
+      = f.text_field :name, class: 'form-control', id: 'recipe_name'
+    .row
+      .col-sm-3
+          = f.file_field :image, class: 'form-control thumbnail'
+      .col-sm-5
+        = f.text_area :description, rows: 12, class: 'form-control', id: 'recipe_description'
+    = f.submit nil, class: 'btn btn-primary mt-3'
+
+.container.mt-3
+  .row
+    - @howtos.map do |howto|
+      .col-sm-3 class="order-#{session[:howtos_ids].index(howto.id)}"
+        = form_with model: [@recipe,howto], method: :delete , local: true do |f|
+          .row
+            h3.col.align-self-end= session[:howtos_ids].index(howto.id) + 1
+            .col.text-right= f.submit '削除', class: 'btn mt-3'
+        = form_with model: [@recipe,howto], local: true do |f|
+          = f.file_field :image, class: 'form-control tumbnail'
+          = f.text_area :description, rows: 6, class: 'form-control', id: 'howto_description'
+          .text-right= f.submit nil, class: 'btn btn-primary mt-3'
+    .col-sm-3 class='order-last'
+      = form_with model: [@recipe,@howto], local: true do |f|
+        = f.hidden_field :description, value: ''
+        = f.submit '追加', class: 'btn mt-3'

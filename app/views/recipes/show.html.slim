@@ -1,6 +1,6 @@
 - provide(:title, @recipe.name)
 .container
-  .row
+  .row.col
     h1= @recipe.name
     .align-self-center.ml-4= link_to "by #{@recipe.user.name}", admin_user_path(@recipe.user)
     .ml-auto.mt-3
@@ -12,3 +12,11 @@
       = render partial: 'image/thumbnail', locals: { recipe: @recipe }
     .col-sm-5= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
     .col-sm-4= 'Category'
+
+.container
+  .row
+    - @howtos.each do |howto|
+      -if howto.present?
+        .col-sm-3
+          = image_tag(howto.mini) if howto.image.attached?
+          = howto.description
