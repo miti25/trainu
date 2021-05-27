@@ -13,10 +13,12 @@
     .col-sm-5= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
     .col-sm-4= 'Category'
 
-.container
+.container.mt-5
   .row
-    - @howtos.each do |howto|
-      -if howto.present?
-        .col-sm-3
-          = image_tag(howto.mini) if howto.image.attached?
-          = howto.description
+    - @howtos.map do |howto|
+      .col-sm-3
+        .row
+          h3.col.align-self-end= @howtos.ids.index(howto.id) + 1
+        -if howto.image.attached?
+          .mini= image_tag(howto.mini)
+        = howto.description

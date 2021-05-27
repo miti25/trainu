@@ -3,6 +3,6 @@ class Howto < ApplicationRecord
   has_one_attached :image
 
   def mini
-    image.variant(resize: '100x150').processed
+    image.variant(resize: '120x180').processed
   end
 end

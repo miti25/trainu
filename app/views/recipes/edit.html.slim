@@ -10,12 +10,12 @@
       = f.text_field :name, class: 'form-control', id: 'recipe_name'
     .row
       .col-sm-3
-          = f.file_field :image, class: 'form-control thumbnail'
+        = f.file_field :image, class: 'form-control thumbnail'
       .col-sm-5
         = f.text_area :description, rows: 12, class: 'form-control', id: 'recipe_description'
     = f.submit nil, class: 'btn btn-primary mt-3'
 
-.container.mt-3
+.container.mt-5
   .row
     - @howtos.map do |howto|
       .col-sm-3 class="order-#{session[:howtos_ids].index(howto.id)}"
@@ -24,7 +24,7 @@
             h3.col.align-self-end= session[:howtos_ids].index(howto.id) + 1
             .col.text-right= f.submit '削除', class: 'btn mt-3'
         = form_with model: [@recipe,howto], local: true do |f|
-          = f.file_field :image, class: 'form-control tumbnail'
+          = f.file_field :image, class: 'form-control'
           = f.text_area :description, rows: 6, class: 'form-control', id: 'howto_description'
           .text-right= f.submit nil, class: 'btn btn-primary mt-3'
     .col-sm-3 class='order-last'

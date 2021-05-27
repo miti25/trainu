@@ -9,7 +9,6 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
     @howtos = @recipe.howtos
-    @howto = Howto.new
   end
 
   def new
