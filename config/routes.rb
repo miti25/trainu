@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   root 'pages#home'
   resources :recipes do
-    resources :howtos, only: [:create, :update, :destroy]
+    resources :howtos, only: [:create, :update, :destroy, :edit]
     collection do
       get 'search'
     end

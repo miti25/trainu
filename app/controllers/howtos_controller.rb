@@ -1,5 +1,7 @@
 class HowtosController < ApplicationController
 
+  def edit; end
+
   def create
     howto = Howto.new(howto_params)
     howto.recipe_id = params[:recipe_id]
@@ -17,6 +19,7 @@ class HowtosController < ApplicationController
     if howto.update(howto_params)
       redirect_to edit_recipe_path(howto.recipe)
     else
+      flash[:danger] = "保存できません"
       redirect_back(fallback_location: root_path)
     end
   end

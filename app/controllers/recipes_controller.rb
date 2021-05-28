@@ -47,6 +47,9 @@ class RecipesController < ApplicationController
       session.delete(:howtos_ids)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
+      @howtos = @recipe.howtos
+      @howto = Howto.new
+      session[:howtos_ids] ||= @howtos.ids
       render :edit
     end
   end

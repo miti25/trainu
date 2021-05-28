@@ -1,6 +1,7 @@
 class Recipe < ApplicationRecord
   validates :name, presence: true, length: { maximum: 30 }
   validates :description, length: { maximum: 200 }
+  validate :image_type, :image_size
   belongs_to :user
   has_many :howtos, dependent: :destroy
   has_one_attached :image
@@ -17,4 +18,5 @@ class Recipe < ApplicationRecord
   def thumbnail
     image.variant(resize: '200x300').processed
   end
+
 end
