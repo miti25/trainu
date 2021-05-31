@@ -23,6 +23,10 @@ class HowtosController < ApplicationController
 
   def destroy
     howto = Howto.find(params[:id])
+    howtos = howto.recipe.howtos.where('order_num > ?', howto.order_num)
+    howtos.each do |h|
+      h.update(order_num: h.order_num - 1)
+    end
     howto.destroy
     redirect_back(fallback_location: root_path)
   end

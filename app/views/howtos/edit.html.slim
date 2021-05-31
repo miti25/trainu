@@ -1,16 +1,15 @@
-
-.container.mt-5
+.container.mt-5.howtos-container
   = render partial: 'shared/flash'
   .row
     - @howtos.map do |howto|
-      .col-sm-3 class="order-#{howto.order_num}"
+      .col-sm-3 class="order-#{howto.order_num}" id="order-num#{howto.order_num}"
         = form_with model: [@recipe,howto], method: :delete , local: true do |f|
           .row
             h3.col.align-self-end= howto.order_num
             .col.text-right= f.submit '削除', class: 'btn mt-3'
         = form_with model: [@recipe,howto], local: true do |f|
           = f.file_field :image, class: 'form-control'
-          = f.text_area :description, rows: 6, class: 'form-control', id: 'howto_description', placeholder: '100文字以内で説明'
+          = f.text_area :description, rows: 6, class: 'form-control', id: 'description', placeholder: '100文字以内で説明'
           .text-right= f.submit nil, class: 'btn btn-primary mt-3'
     .col-sm-3 class='order-last'
       = form_with model: [@recipe,@howto], local: true do |f|

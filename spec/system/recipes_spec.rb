@@ -113,13 +113,13 @@ describe 'レシピの管理機能', type: :system do
 
       before do
         visit new_recipe_path
-        fill_in 'レシピ名', with: recipe_name
-        click_button '登録する'
+        fill_in 'recipe[name]', with: recipe_name
+        click_button 'レシピ詳細作成へ'
       end
 
       context 'レシピが正常だった場合' do
-        it '登録ができる' do
-          expect(page).to have_selector '.alert-success', text: 'レシピ「新規作成テスト」を登録しました'
+        it '編集ページへ移行' do
+          expect(page).to have_current_path edit_recipe_path(Recipe.find_by(name: recipe_name)), ignore_query: true
         end
       end
 

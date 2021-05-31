@@ -65,3 +65,7 @@ RSpec/ExampleLength:
 #let subjectの個数制限
 RSpec/MultipleMemoizedHelpers:
   Max: 6
+
+#名付けに数字を用いる際のnomalcase,snake_case等の統一
+Naming/VariableNumber:
+  Enabled: false
