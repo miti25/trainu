@@ -3,10 +3,10 @@
   = render partial: 'shared/flash'
   .row
     - @howtos.map do |howto|
-      .col-sm-3 class="order-#{session[:howtos_ids].index(howto.id)}"
+      .col-sm-3 class="order-#{howto.order_num}"
         = form_with model: [@recipe,howto], method: :delete , local: true do |f|
           .row
-            h3.col.align-self-end= session[:howtos_ids].index(howto.id) + 1
+            h3.col.align-self-end= howto.order_num
             .col.text-right= f.submit '削除', class: 'btn mt-3'
         = form_with model: [@recipe,howto], local: true do |f|
           = f.file_field :image, class: 'form-control'

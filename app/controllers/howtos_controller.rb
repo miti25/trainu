@@ -3,9 +3,11 @@ class HowtosController < ApplicationController
 
   def create
     howto = Howto.new(howto_params)
+    recipe = Recipe.find_by(id: params[:recipe_id])
     howto.recipe_id = params[:recipe_id]
-    session[:howtos_ids] = session[:howtos_ids].push(howto.id) if howto.save
-    redirect_back(fallback_location: root_path)
+    howto.save
+    howto.update(order_num: recipe.howtos.index(howto) + 1)
+    redirect_to edit_recipe_path(recipe)
   end
 
   def update
@@ -21,7 +23,6 @@ class HowtosController < ApplicationController
 
   def destroy
     howto = Howto.find(params[:id])
-    session[:howtos_ids].delete(howto.id)
     howto.destroy
     redirect_back(fallback_location: root_path)
   end

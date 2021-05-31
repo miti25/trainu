@@ -16,9 +16,9 @@
 .container.mt-5
   .row
     - @howtos.map do |howto|
-      .col-sm-3
+      .col-sm-3 class="order-#{howto.order_num}"
         .row
-          h3.col.align-self-end= @howtos.ids.index(howto.id) + 1
+          h3.col.align-self-end= howto.order_num
         -if howto.image.attached?
           .mini= image_tag(howto.mini)
         = howto.description
