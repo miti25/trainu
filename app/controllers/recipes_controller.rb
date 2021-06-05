@@ -28,7 +28,7 @@ class RecipesController < ApplicationController
   def destroy
     set_recipe
     @recipe.destroy
-    redirect_to recipes_url, notice: "レシピ「#{@recipe.name}」を削除しました"
+    head :no_content
   end
 
   def edit
