@@ -13,8 +13,5 @@
             .dropdown-divider
             li.dropdown-item= link_to 'ログアウト', logout_path, method: :delete
       - else
-        li.dropdown
-          button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          ul.dropdown-menu.dropdown-menu-right aria-labelledby="dropdownMenuButton"
-            li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
-            li.nav-item= link_to 'サインイン', new_admin_user_path, class: 'nav-link'
+        li.nav-item= link_to 'ログイン', login_path, class: 'nav-link'
+        li.nav-item= link_to 'サインイン', new_admin_user_path, class: 'nav-link'

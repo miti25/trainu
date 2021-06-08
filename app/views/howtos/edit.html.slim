@@ -4,12 +4,15 @@
     - @howtos.map do |howto|
       .col-sm-3 class="order-#{howto.order_num}" id="order-num#{howto.order_num}"
         = form_with model: [@recipe,howto], method: :delete , local: true do |f|
-          .row
-            h3.col.align-self-end= howto.order_num
-            .col.text-right= f.submit '削除', class: 'btn mt-3'
-        = form_with model: [@recipe,howto], local: true do |f|
-          = f.file_field :image, class: 'form-control'
-          = f.text_area :description, rows: 6, class: 'form-control', id: 'description', placeholder: '100文字以内で説明'
+          .col.text-right= f.submit '削除', class: 'btn mt-3'
+        = form_with model: [@recipe,howto], remote: true do |f|
+          .row.align-items-center
+            h3.col= howto.order_num
+            .col= f.label :image
+              .image-selector= '画像を選択'
+              = f.file_field :image, style: 'display:none', class: 'howto_uploader'
+          = image_tag(howto.mini, class: 'howto_preview mini d-block mx-auto') if howto.image.attached?
+          = f.text_area :description, rows: 6, class: 'form-control mt-3', id: 'description', placeholder: '100文字以内で説明'
           .text-right= f.submit nil, class: 'btn btn-primary mt-3'
     .col-sm-3 class='order-last'
       = form_with model: [@recipe,@howto], local: true do |f|

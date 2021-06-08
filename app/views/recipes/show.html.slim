@@ -9,7 +9,7 @@
         = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
   .row
     .col-sm-3
-      = render partial: 'image/thumbnail', locals: { recipe: @recipe }
+      = image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
     .col-sm-5= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
     .col-sm-4= 'Category'
 
@@ -17,8 +17,6 @@
   .row
     - @howtos.map do |howto|
       .col-sm-3 class="order-#{howto.order_num}"
-        .row
-          h3.col.align-self-end= howto.order_num
-        -if howto.image.attached?
-          .mini= image_tag(howto.mini)
+        h3= howto.order_num
+        = image_tag(howto.mini, class:'mini d-block mx-auto') if howto.image.attached?
         = howto.description
