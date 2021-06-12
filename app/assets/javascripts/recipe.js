@@ -18,6 +18,7 @@ document.addEventListener('turbolinks:load', function() {
       reader.onload = function() {
         const image = reader.result;
         document.querySelector('.recipe_preview').setAttribute('src', image);
+        document.querySelector('.recipe_preview').setAttribute('class', 'thumbnail');
       }
     });
   document.querySelectorAll('.howto_uploader').forEach(function(a) {

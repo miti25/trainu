@@ -2,13 +2,13 @@
   = render partial: 'shared/flash'
   .row
     - @howtos.map do |howto|
-      .col-3 class="order-#{howto.order_num}" id="order-num#{howto.order_num}"
+      .col-3.mb-5 class="order-#{howto.order_num}" id="order-num#{howto.order_num}"
         = form_with model: [@recipe,howto], method: :delete , local: true do |f|
-          .col.text-right= f.submit '削除', class: 'btn mt-3'
-        = form_with model: [@recipe,howto], local: true do |f|
           .row.align-items-center
             h3.col= howto.order_num
-            .col= f.file_field :image, class: 'howto_uploader'
+            .col.text-right= f.submit '削除', class: 'btn mt-3'
+        = form_with model: [@recipe,howto], local: true do |f|
+          .col= f.file_field :image, class: 'howto_uploader'
           = image_tag(howto.mini, class: 'mini d-block mx-auto') if howto.image.attached?
           = f.text_area :description, rows: 6, class: 'form-control mt-3', id: 'description', placeholder: '100文字以内で説明'
           .text-right= f.submit nil, class: "btn btn-primary mt-3 #{howto.order_num} update_btn"

@@ -6,16 +6,15 @@
 
 .container
   = form_with model: @recipe, local: true do |f|
+    .text-right= f.submit nil, class: 'btn btn-primary mt-3'
     .row.col-sm-3
       = f.text_field :name, class: 'form-control', id: 'recipe_name'
     .row.align-items-center
       .col-sm-3
-        .text-center= f.label :image
-          .image-selector= '画像を選択'
-          = f.file_field :image, style: 'display:none', class: 'recipe_uploader'
-        = image_tag(@recipe.thumbnail, class: 'recipe_preview thumbnail') if @recipe.image.attached?
+        = f.file_field :image, class: 'recipe_uploader'
+        =image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
+        img.recipe_preview
       .col-sm-5
         = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description'
-    = f.submit nil, class: 'btn btn-primary mt-3'
 
 = render template: 'howtos/edit'
