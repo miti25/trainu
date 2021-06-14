@@ -6,15 +6,37 @@
 
 .container
   = form_with model: @recipe, local: true do |f|
-    .text-right= f.submit nil, class: 'btn btn-primary mt-3'
-    .row.col-sm-3
+    .text-right= f.submit '保存', class: 'btn btn-primary mt-3'
+    .row.col-3
       = f.text_field :name, class: 'form-control', id: 'recipe_name'
     .row.align-items-center
-      .col-sm-3
+      .col-3
         = f.file_field :image, class: 'recipe_uploader'
-        =image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
-        img.recipe_preview
-      .col-sm-5
+        - if @recipe.image.attached?
+          = image_tag(@recipe.thumbnail, class: 'recipe_preview thumbnail')
+        - else
+          img.recipe_preview
+      .col-5
         = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description'
 
-= render template: 'howtos/edit'
+    .container.mt-5
+      .row.howtos_area
+        = f.fields_for :howtos do |howto|
+          .col-3.js_howto_group data-index="#{howto.index}"
+            .text-right
+              span.delete_btn
+                = '削除'
+              - if @recipe.persisted?
+                = howto.check_box :_destroy, data:{ index: howto.index }, class: "hidden_destroy"
+              span.ml-3.add_btn
+                = '追加'
+            = howto.file_field :image, class: "howto_uploader #{howto.index}"
+            - if howto.object.image.attached?
+              = image_tag(howto.object.mini, class: 'howto_preview mini d-block mx-auto')
+            - else
+              img.howto_preview
+            = howto.text_area :description, rows: 6, class: 'form-control mt-3', id: 'description', placeholder: '100文字以内で説明'
+  span= form_with model: [@recipe,@howto], local: true do |f|
+    = f.hidden_field :description, value: ''
+    = f.submit '追加', class: 'btn mt-3'
+/ = render template: 'howtos/edit'

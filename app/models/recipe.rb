@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   validate :image_type, :image_size
   belongs_to :user
   has_many :howtos, dependent: :destroy
+  accepts_nested_attributes_for :howtos, allow_destroy: true
   has_one_attached :image
   scope :recent, -> { order(created_at: :desc) }
 

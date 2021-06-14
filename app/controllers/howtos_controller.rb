@@ -1,5 +1,4 @@
 class HowtosController < ApplicationController
-  def edit; end
 
   def create
     howto = Howto.new(howto_params)
