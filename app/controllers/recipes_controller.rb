@@ -28,7 +28,7 @@ class RecipesController < ApplicationController
   def destroy
     set_recipe
     @recipe.destroy
-    head :no_content
+    redirect_to recipes_path, notice: "レシピ「#{@recipe.name}」を削除しました"
   end
 
   def edit
@@ -39,7 +39,6 @@ class RecipesController < ApplicationController
   def update
     set_recipe
     if @recipe.update(recipe_params)
-
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
       set_howtos
@@ -53,7 +52,7 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image,
-                                    howtos_attributes: [:description, :image, :_destroy, :id])
+                                    howtos_attributes: [:description, :image, :order_num, :_destroy, :id])
   end
 
   def set_recipe

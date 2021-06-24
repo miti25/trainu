@@ -17,6 +17,5 @@
   .row
     - @howtos.map do |howto|
       .col-sm-3 class="order-#{howto.order_num}"
-        h3= howto.order_num
         = image_tag(howto.mini, class:'mini d-block mx-auto') if howto.image.attached?
         = howto.description
