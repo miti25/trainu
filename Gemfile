@@ -39,6 +39,7 @@ gem 'slim-rails'
 gem 'html2slim'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'cocoon'
 gem 'ransack'
 
 group :development, :test do
