@@ -1,0 +1,12 @@
+.nested-fields.col-3.mt-5 class="order-#{f.object.order_num}"
+  .text-right= link_to_remove_association '削除', f
+  / = f.hidden_field :order_num, value: f.index, class: 'order_num'
+  = f.text_field :order_num, value: f.index, class: 'order_num'
+  = f.file_field :image, class: 'howto_uploader', id: f.index
+  - if f.object.image.attached?
+    = image_tag(f.object.mini, id: "howto_preview_#{f.index}", class: 'howto_preview mini d-block mx-auto')
+  - else
+      img id="howto_preview_#{f.index}" class='howto_preview no_img'
+  .text-right.word_count id="word_count_#{f.index}"
+    '残り100文字
+  = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', id: f.index, placeholder: "コツや意識するポイントなどを説明：100文字以内"

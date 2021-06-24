@@ -1,58 +1,78 @@
 
 document.addEventListener('turbolinks:load', function() {
-  document.querySelectorAll('.delete').forEach(function(a) {
-    a.addEventListener('ajax:success', function() {
-      a.style.display = 'none';
-    });
-  });
+
+  // recipe画像プレビュー表示
   const uploader = document.querySelector('.recipe_uploader');
-    uploader.addEventListener('change', function() {
+  uploader.addEventListener('change', function() {
+    const file = uploader.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+      const image = reader.result;
+      document.querySelector('.recipe_preview').setAttribute('src', image);
+      document.querySelector('.recipe_preview').setAttribute('class', 'thumbnail');
+    }
+  });
+  // recipe概要テキスト数カウント
+  document.querySelector('#recipe_description').onkeyup = function(e){
+    const max = 200
+    const word_count = max - e.target.value.length
+    document.querySelector('#word_count').innerHTML = '残り' + word_count + '文字'
+  };
+  // howto画像プレビュー表示
+  document.querySelectorAll('.howto_uploader').forEach(function(a){
+    a.addEventListener('change', function(e) {
+      const uploader = e.target
       const file = uploader.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function() {
         const image = reader.result;
-        document.querySelector('.recipe_preview').setAttribute('src', image);
-        document.querySelector('.recipe_preview').setAttribute('class', 'thumbnail');
+        const preview = document.getElementById(`howto_preview_${uploader.id}`);
+        preview.setAttribute('src', image);
+        preview.setAttribute('class', 'mini d-block mx-auto');
       }
     });
-  document.querySelectorAll('.howto_uploader').forEach(function(a) {
-    a.addEventListener('change', function() {
-      const file = a.files[0];
+  });
+  // howto詳細文字数カウント
+  document.querySelectorAll('.howto_description').forEach(function(a){
+    a.onkeyup = function(e){
+      const max = 100
+      const word_count = max - e.target.value.length
+      const index = e.target.id
+      document.querySelector(`#word_count_${index}`).innerHTML = '残り' + word_count + '文字'
+    };
+  });
+  // gem:cocoon 新規フォーム作成後
+  jQuery('.links').on('cocoon:after-insert', function(e, insertedItem){
+    const index = Number(jQuery('.order_num').eq(-2).val()) + 1;
+    // 投稿フォーム新規追加下の画像プレビュー表示にかかる処理
+    jQuery(insertedItem).find('.howto_uploader').attr('id', index);
+    jQuery(insertedItem).find('.no_img').attr('id', 'howto_preview_' + index);
+    // 表示順指定
+    jQuery(insertedItem).find('.order_num').val(index);
+    jQuery(insertedItem).removeClass('order-');
+    jQuery(insertedItem).addClass(`order-${index}`);
+    // word_count
+    jQuery(insertedItem).find('.word_count').attr('id', 'word_count_' + index);
+    //画像プレビュー表示
+    jQuery(insertedItem).find('.howto_uploader').on('change', function(e){
+      const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function() {
         const image = reader.result;
-        document.querySelector('.howto_preview').setAttribute('src', image);
-        document.querySelector('.howto_preview').setAttribute('class', 'mini');
+        const preview = jQuery(insertedItem).find('.howto_preview');
+        preview.attr('src', image);
+        preview.attr('class', 'mini d-block mx-auto');
       }
     });
+    // 文字数カウント
+    const howto_description = jQuery(insertedItem).find('.howto_description');
+    howto_description.keyup(function(){
+      const max = 100;
+      const word_count = max - howto_description.val().length;
+      jQuery(insertedItem).find('.word_count').html(`残り${word_count}文字`);
+    });
   });
-  function buildField(index) {  // 追加するフォームのｈｔｍｌを用意
-    const html = `<div class="col-3 js_howto_group" data-index="${index}">
-                    <div class="text-right">
-                      <span class="delete_btn">削除</span>
-                      <span class="ml-3 add_btn">追加</span>
-                    </div>
-                    <input class="howto_uploader howto_${index}" type="file" name="recipe[howtos_attributes][${index}][image]" id="recipe_howtos_attributes_${index}_image">
-                    <img class="howto_preview">
-                    <textarea rows="6" class="form-control mt-3" id="description" placeholder="100文字以内で説明" name="recipe[howtos_attributes][${index}][description]"></textarea>
-                  </div>`;
-    return html;
-  }
-
-  let fileIndex = [1, 2, 3, 4] // 追加するフォームのインデックス番号を用意
-  var lastIndex = $(".js_howto_group:last").data("index"); // 編集フォーム用（すでにデータがある分のインデックス番号が何か取得しておく）
-  fileIndex.splice(0, lastIndex); // 編集フォーム用（データがある分のインデックスをfileIndexから除いておく）
-  let fileCount = $(".hidden_destroy").length; // 編集フォーム用（データがある分のフォームの数を取得する）
-  let displayCount = $(".js_howto_group").length // 見えているフォームの数を取得する
-  $(".hidden_destroy").hide(); // 編集フォーム用（削除用のチェックボックスを非表示にしておく）
-  if (fileIndex.length == 0) $(".add_btn").css("display","none"); // 編集フォーム用（フォームが５つある場合は追加ボタンを非表示にしておく）
-
-  $(".add_btn").on("click", function() { // 追加ボタンクリックでイベント発火
-    $(".howtos_area").append(buildField(fileIndex[0])); // fileIndexの一番小さい数字をインデックス番号に使ってフォームを作成
-    fileIndex.shift(); // fileIndexの一番小さい数字を取り除く
-    if (fileIndex.length == 0) $(".add_btn").css("display","none"); // フォームが５つになったら追加ボタンを非表示にする
-    displayCount += 1; // 見えているフォームの数をカウントアップしておく
-  })
 });
