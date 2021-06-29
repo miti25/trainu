@@ -11,18 +11,18 @@
       = f.text_field :name, class: 'form-control', id: 'recipe_name', placeholder: "トレーニング名"
     .row.align-items-center
       .col-3
-        = f.file_field :image, class: 'recipe_uploader'
+        = f.file_field :image, id: 'recipe_uploader'
         - if @recipe.image.attached?
-          = image_tag(@recipe.thumbnail, class: 'recipe_preview thumbnail')
+          = image_tag(@recipe.thumbnail, id: 'recipe_preview', class: 'thumbnail')
         - else
           img.recipe_preview
       .col-5
         #word_count.text-right= '残り200文字'
-        = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要を説明：200字以内"
+        = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "使う道具やどんな時にやりたいトレーニングかなど。トレーニングの概要:"
 
     .container.mt-5
       .row#howtos_area
         = f.fields_for :howtos do |howto|
-          = render 'howto_fields', f: howto
+          = render 'howto_fields', f: howto, data: { data_association_insertion_traversal: 'closest', association_insertion_method: 'append' }
         .links.ml-5.mt-5.order-last
-          = link_to_add_association '＋追加', f, :howtos
+          = link_to_add_association '＋追加', f, :howtos, id: 'add_howto'

@@ -1,12 +1,19 @@
-.nested-fields.col-3.mt-5 class="order-#{f.object.order_num}"
-  .text-right= link_to_remove_association '削除', f
+.nested-fields.col-3.mt-5 class="order-#{f.object.order_num} howto" id="#{f.index}"
   / = f.hidden_field :order_num, value: f.index, class: 'order_num'
-  = f.text_field :order_num, value: f.index, class: 'order_num'
-  = f.file_field :image, class: 'howto_uploader', id: f.index
+  = f.text_field :order_num, value: f.object.order_num, class: 'order_num'
+  .row.align-items-center
+    h3.col class='index_text'
+      = f.object.order_num.to_i + 1
+    a.col.text-right class='move_left'
+      '◀
+    a.col.text-right class='move_right'
+      '▶
+    .col.text-right= link_to_remove_association '削除', f, class: 'remove_howto'
+  = f.file_field :image, class: 'howto_uploader'
   - if f.object.image.attached?
-    = image_tag(f.object.mini, id: "howto_preview_#{f.index}", class: 'howto_preview mini d-block mx-auto')
+    = image_tag(f.object.mini, class: 'howto_preview mini d-block mx-auto')
   - else
-      img id="howto_preview_#{f.index}" class='howto_preview no_img'
-  .text-right.word_count id="word_count_#{f.index}"
+      img class='howto_preview no_img'
+  .text-right class='word_count'
     '残り100文字
-  = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', id: f.index, placeholder: "コツや意識するポイントなどを説明：100文字以内"
+  = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', placeholder: 'コツや意識するポイントなど:'
