@@ -21,6 +21,7 @@ document.addEventListener('turbolinks:load', function() {
     document.querySelector('#word_count').innerHTML = '残り' + word_count + '文字'
   };
 
+  // howtos表示制限
   const howtos_limit = 8
   if (document.querySelectorAll('.howto').length >= howtos_limit) document.getElementById('add_howto').style.display ='none';
 
@@ -30,44 +31,46 @@ document.addEventListener('turbolinks:load', function() {
       const target_howto = e.target.closest('.howto');
       const number = Number(target_howto.querySelector('.order_num').value);
       const previous_howto = document.querySelector(`.order-${number - 1}`)
-      target_howto.querySelector('.order_num').setAttribute('value', number - 1);
-      target_howto.querySelector('.index_text').textContent = number;
-      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number - 1}`);
       previous_howto.querySelector('.order_num').setAttribute('value', number);
       previous_howto.querySelector('.index_text').textContent = number + 1;
       previous_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number}`);
       if (target_howto.classList.contains('order-0')){
         a.style.display ='none';
         previous_howto.querySelector('.move_left').style.display ='block';
-      } else if (previous_howto.classList.contains(`order-${howtos_limit - 1}`)){
+      } else if (number + 1 == document.querySelectorAll('.howto').length){
         target_howto.querySelector('.move_right').style.display ='block';
         previous_howto.querySelector('.move_right').style.display ='none';
       };
+      target_howto.querySelector('.index_text').textContent = number;
+      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number - 1}`);
+      target_howto.querySelector('.order_num').setAttribute('value', number - 1);
     });
   });
   document.querySelectorAll('.move_right').forEach(function(a){
-    if (a.closest(`.order-${howtos_limit - 1}`)) a.style.display ='none';
+    if (Number(a.closest('.howto').querySelector('.order_num').value) + 1  == document.querySelectorAll('.howto').length){
+      a.style.display ='none';
+    };
     a.addEventListener('click', function(e){
       const target_howto = e.target.closest('.howto');
       const number = Number(target_howto.querySelector('.order_num').value);
       const next_howto = document.querySelector(`.order-${number + 1}`)
-      target_howto.querySelector('.order_num').setAttribute('value', number + 1);
-      target_howto.querySelector('.index_text').textContent = number + 2;
-      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number + 1}`);
       next_howto.querySelector('.order_num').setAttribute('value', number);
       next_howto.querySelector('.index_text').textContent = number + 1;
       next_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number}`);
-      if (target_howto.classList.contains(`order-${howtos_limit -1}`)){
+      if (number + 2 == document.querySelectorAll('.howto').length){
         a.style.display ='none';
         next_howto.querySelector('.move_right').style.display ='block';
       } else if (next_howto.classList.contains('order-0')){
         target_howto.querySelector('.move_left').style.display ='block';
         next_howto.querySelector('.move_left').style.display ='none';
       };
+      target_howto.querySelector('.index_text').textContent = number + 2;
+      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number + 1}`);
+      target_howto.querySelector('.order_num').setAttribute('value', number + 1);
     });
   });
   // howto画像プレビュー表示
-  const howtos_uploader = Array.from(document.querySelectorAll('.howto_uploader'));
+  const howtos_uploader = document.querySelectorAll('.howto_uploader');
   howtos_uploader.forEach(function(a){
     a.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -82,7 +85,7 @@ document.addEventListener('turbolinks:load', function() {
     });
   });
   // howto詳細文字数カウント
-  const howtos_description = Array.from(document.querySelectorAll('.howto_description'));
+  const howtos_description = document.querySelectorAll('.howto_description');
   howtos_description.forEach(function(a){
     a.onkeyup = function(e){
       const max = 100;
@@ -97,22 +100,26 @@ document.addEventListener('turbolinks:load', function() {
     jQuery(removedItem).removeClass()
     jQuery('.howto').each(function(key, a){
       const each_value = jQuery(a).find('.order_num').val()
-      if (each_value >= removed_index) {
-        jQuery(a).find('.order_num').val(each_value - 1);
+      if (each_value > removed_index) {
+        jQuery(a).find('.order_num').val(each_value - 1)
         jQuery(a).find('.index_text').text(each_value);
         jQuery(a).attr('class', `nested-fields howto col-3 mt-5 order-${each_value -1}`);
+        if (jQuery(a).hasClass('order-0')) jQuery(a).find('.move_left').hide()
       };
     });
+    jQuery('.howto').find('.move_right').eq(-1).hide()
     if (removed_index < howtos_limit) jQuery('#add_howto').show();
   });
   // gem:cocoon 新規フォーム作成後
   jQuery('.links').on('cocoon:after-insert', function(e, insertedItem){
-    if (jQuery('.order_num').eq(-2).val() >= howtos_limit - 2) jQuery('#add_howto').hide();
-    const preview_index = jQuery('.order_num').eq(-2).val();
-    if (preview_index == null || preview_index == 'new_howtos'){
+    const previous_index = jQuery('.order_num').eq(-2).val();
+    // リミット到達時フォーム追加ボタン非表示
+    if (previous_index >= howtos_limit - 2) jQuery('#add_howto').hide();
+    // if (previous_index == null || previous_index == 'new_howtos'){
+    if (jQuery('.howto').length == 1){
       var index =  0
     } else {
-      var index = Number(preview_index) + 1
+      var index = Number(previous_index) + 1
     };
     // 表示順指定
     jQuery(insertedItem).find('.order_num').val(index);
@@ -138,5 +145,48 @@ document.addEventListener('turbolinks:load', function() {
       const word_count = max - howto_description.val().length;
       jQuery(insertedItem).find('.word_count').html(`残り${word_count}文字`);
     });
+    jQuery(insertedItem).find('.move_left').on('click', function(e){
+      const target_howto = e.target.closest('.howto');
+      const number = Number(target_howto.querySelector('.order_num').value);
+      const previous_howto = document.querySelector(`.order-${number - 1}`)
+      target_howto.querySelector('.order_num').setAttribute('value', number - 1);
+      target_howto.querySelector('.index_text').textContent = number;
+      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number - 1}`);
+      previous_howto.querySelector('.order_num').setAttribute('value', number);
+      previous_howto.querySelector('.index_text').textContent = number + 1;
+      previous_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number}`);
+      if (target_howto.classList.contains('order-0')){
+        a.style.display ='none';
+        previous_howto.querySelector('.move_left').style.display ='block';
+      } else if (previous_howto.classList.contains(`order-${howtos_limit - 1}`)){
+        target_howto.querySelector('.move_right').style.display ='block';
+        previous_howto.querySelector('.move_right').style.display ='none';
+      };
+    });
+    jQuery(insertedItem).find('.move_right').on('click', function(e){
+      const target_howto = e.target.closest('.howto');
+      const number = Number(target_howto.querySelector('.order_num').value);
+      const next_howto = document.querySelector(`.order-${number + 1}`)
+      target_howto.querySelector('.order_num').setAttribute('value', number + 1);
+      target_howto.querySelector('.index_text').textContent = number + 2;
+      target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number + 1}`);
+      next_howto.querySelector('.order_num').setAttribute('value', number);
+      next_howto.querySelector('.index_text').textContent = number + 1;
+      next_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${number}`);
+      if (target_howto.classList.contains(`order-${howtos_limit -1}`)){
+        a.style.display ='none';
+        next_howto.querySelector('.move_right').style.display ='block';
+      } else if (next_howto.classList.contains('order-0')){
+        target_howto.querySelector('.move_left').style.display ='block';
+        next_howto.querySelector('.move_left').style.display ='none';
+      };
+    });
+    //リミット時の左右移動キー表示
+    if (jQuery(insertedItem).hasClass('order-0')) {
+      jQuery(insertedItem).find('.move_left').hide()
+    } else {
+      jQuery(insertedItem).find('.move_right').hide()
+      jQuery('.move_right').eq(-2).show()
+    };
   });
 });
