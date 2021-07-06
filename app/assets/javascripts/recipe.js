@@ -31,13 +31,11 @@ document.addEventListener('turbolinks:load', function() {
     const original_index = howtos_array.findIndex(index => index == target_howto)
     const replaced_index = original_index + move_range
     const replace_howto = howtos_array[replaced_index]
-    replace_howto.setAttribute('id', original_index);
     replace_howto.querySelector('.index_text').textContent = original_index + 1;
-    replace_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${original_index}`);
+    replace_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${original_index}`);
 
-    target_howto.setAttribute('id', replaced_index);
     target_howto.querySelector('.index_text').textContent = replaced_index+ 1;
-    target_howto.setAttribute('class', `nested-fields howto col-3 mt-5 order-${replaced_index}`);
+    target_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${replaced_index}`);
     let end_index = []
     if(move_range == 1){
       end_index = original_index
@@ -97,27 +95,23 @@ document.addEventListener('turbolinks:load', function() {
   });
   // gem:cocoon フォーム削除後
   jQuery('#howtos_area').on('cocoon:after-remove', function(e, removedItem){
-    const removed_index =jQuery(removedItem).attr('id')
-    jQuery(removedItem).removeClass()
+    jQuery(removedItem).removeClass();
+    howtos_array = jQuery('.howto').toArray();
+    howtos_length = howtos_array.length;
+    if (howtos_length <= howtos_limit) jQuery('#add_howto').show();
+    jQuery(howtos_array[0]).find('.move_left').hide();
+    jQuery(howtos_array[howtos_length - 1]).find('.move_right').hide();
     jQuery('.howto').each(function(key, a){
-      const each_value = Number(jQuery(a).attr('id'))
-      if (each_value > removed_index) {
-        jQuery(a).attr('id', each_value - 1)
-        jQuery(a).find('.index_text').text(each_value);
-        jQuery(a).attr('class', `nested-fields howto col-3 mt-5 order-${each_value -1}`);
-        if (jQuery(a).hasClass('order-0')) jQuery(a).find('.move_left').hide()
-      };
+      jQuery(a).find('.index_text').text(key +1);
+      jQuery(a).attr('class', `nested-fields col-3 mt-5 howto order-${key}`);
     });
-    if (removed_index < howtos_limit) jQuery('#add_howto').show();
-    jQuery(removedItem).removeAttr('id')
-    jQuery(`#${jQuery('.howto').length - 1}`).find('.move_right').hide()
   });
 
   // gem:cocoon 新規フォーム作成後
   jQuery('.links').on('cocoon:after-insert', function(e, insertedItem){
     howtos_array = jQuery('.howto').toArray()
     howtos_length = howtos_array.length
-    const previous_index = jQuery('.howto').eq(-2).attr('id');
+    const previous_index = jQuery(howtos_array).index(jQuery('.howto').eq(-2));
     // リミット到達時フォーム追加ボタン非表示
     if (previous_index >= howtos_limit - 2) jQuery('#add_howto').hide();
     if (jQuery('.howto').length == 1){
@@ -126,7 +120,6 @@ document.addEventListener('turbolinks:load', function() {
       var index = Number(previous_index) + 1
     };
     // 表示順指定
-    jQuery(insertedItem).attr('id', index);
     jQuery(insertedItem).find('.index_text').text(index + 1);
     jQuery(insertedItem).removeClass('order-');
     jQuery(insertedItem).addClass(`order-${index}`);
