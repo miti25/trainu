@@ -7,8 +7,7 @@ Rails.application.routes.draw do
     resources :users
   end
   root 'pages#home'
-  resources :recipes do
-    resources :howtos, only: %i[create update destroy new]
+  resources :recipes
     collection do
       get 'search'
     end

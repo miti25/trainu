@@ -1,2 +1,0 @@
-class HowtosController < ApplicationController
-end
