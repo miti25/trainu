@@ -8,8 +8,13 @@
         = link_to "編集", edit_recipe_path, class: 'btn btn-primary mr-2'
         = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
   .row
-    .col-5= image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
-    h4.col-5.long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
+    .col-5
+      = image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
+    .col-5
+      h4.long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
+      .category.mt-3
+        h3= '部位'
+        h3= '筋肉'
 
 h3.mt-5.mb-4= '詳細'
 .container
