@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :users
   end
   root 'pages#home'
-  resources :recipes
+  resources :recipes do
     collection do
       get 'search'
     end
