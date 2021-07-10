@@ -33,7 +33,6 @@ class RecipesController < ApplicationController
 
   def edit
     set_recipe
-    set_howtos
   end
 
   def update
@@ -41,7 +40,6 @@ class RecipesController < ApplicationController
     if @recipe.update(recipe_params)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
-      set_howtos
       render :edit
     end
   end
@@ -52,17 +50,12 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image,
-                                    howtos_attributes: %i[description image order_num _destroy id]
-                                    categories_attributes: %i[name _destroy id])
+                                    howtos_attributes: %i[description image order_num _destroy id],
+                                    recipe_categories_attributes: %i[name _destroy id recipe_id category_id])
   end
 
   def set_recipe
     @recipe = Recipe.find(params[:id])
-  end
-
-  def set_howtos
-    @howtos = @recipe.howtos
-    @howto = Howto.new
   end
 
   def owned_user?
