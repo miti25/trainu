@@ -15,7 +15,7 @@
         - if @recipe.image.attached?
           = image_tag(@recipe.thumbnail, id: 'recipe_preview', class: 'thumbnail')
         - else
-          img.recipe_preview
+          img id='recipe_preview'
       .col-6
         #word_count.text-right= '残り200文字'
         = f.text_area :description, rows: 6, class: 'form-control ml-3', id: 'recipe_description', placeholder: "使う道具やどんな時にやりたいトレーニングかなど。トレーニングの概要:"
