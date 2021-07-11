@@ -3,11 +3,9 @@ class Recipe < ApplicationRecord
   validates :description, length: { maximum: 200 }
   validate :image_type, :image_size
   belongs_to :user
+  berongs_to :category
   has_many :howtos, dependent: :destroy
   accepts_nested_attributes_for :howtos, allow_destroy: true
-  has_many :recipe_categories, dependent: :destroy
-  has_many :categories, through: :recipe_categories
-  accepts_nested_attributes_for :recipe_categories, allow_destroy: true
   has_one_attached :image
   scope :recent, -> { order(created_at: :desc) }
 
