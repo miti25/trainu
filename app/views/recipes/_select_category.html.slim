@@ -1,0 +1,29 @@
+h3= '部位'
+= @recipe.category_ids
+a class='link.more_muscle'
+  | もっと詳しく選ぶ
+.main_parts
+  h5= f.collection_check_boxes(:category_ids, @category_parents, :id, :name) do |category|
+    = category.label(class: 'ml-2') { category.check_box(class: 'mr-1') + category.text }
+- @category_parents.each do |category|
+  .card.mt-2
+    .card-body
+      .card-title.form-inline
+        .form-check-input= f.check_box :category_ids, { multiple: true }, category.id, nil
+        h5.form-check-label= category.name
+      .form-group.form-check
+        .row
+          - category.children.each do |child|
+            .col
+              li.list-unstyled
+                = f.check_box :category_ids, { multiple: true }, child.id, nil
+                = child.name
+                - if child.has_children?
+                  span
+                    a class='muscle_drop_down ml-1'
+                      | ▼
+              .form-group.form-check
+                - child.children.each do |grand_child|
+                  li.list-unstyled
+                    = f.check_box :category_ids, { multiple: true }, grand_child.id, nil
+                    = grand_child.name

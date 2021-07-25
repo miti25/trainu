@@ -8,7 +8,7 @@
   = form_with model: @recipe, local: true do |f|
     .text-right= f.submit '保存', class: 'btn btn-primary mt-3'
     .col-3
-      = f.text_field :name, class: 'form-control', id: 'recipe_name', placeholder: "トレーニング名"
+      = f.text_field :name, class: 'form-control form-control-lg', id: 'recipe_name', placeholder: "トレーニング名"
     .row
       .col-5
         = f.file_field :image, id: 'recipe_uploader', class:'mb-2'
@@ -18,10 +18,9 @@
           img id='recipe_preview'
       .col-6
         #word_count.text-right= '残り200文字'
-        = f.text_area :description, rows: 6, class: 'form-control ml-3', id: 'recipe_description', placeholder: "使う道具やどんな時にやりたいトレーニングかなど。トレーニングの概要:"
-        .container
-
-
+        = f.text_area :description, rows: 6, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
+        .container.mt-5#select_category
+          = render partial: 'select_category', locals: { f: f }
 
     h3.mt-5= '詳細'
     .container

@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   before_action :require_admin_or_himself, only: %i[edit destroy update]
+  before_action :set_parents, only: %i[edit new create]
   skip_before_action :login_required, only: %i[show search]
 
   def index
@@ -33,6 +34,8 @@ class RecipesController < ApplicationController
 
   def edit
     set_recipe
+    @categories = Category.all
+    @category_parents = Category.where(ancestry: nil)
   end
 
   def update
@@ -49,13 +52,17 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :image,
+    params.require(:recipe).permit(:name, :description, :image, { category_ids: [] },
                                     howtos_attributes: %i[description image order_num _destroy id],
-                                    recipe_categories_attributes: %i[name _destroy id recipe_id category_id])
+                                    recipe_categories_attributes: %i[recipe_id category_id _destroy id])
   end
 
   def set_recipe
     @recipe = Recipe.find(params[:id])
+  end
+
+  def set_parents
+    @parents = Category.where(ancestry: nil)
   end
 
   def owned_user?

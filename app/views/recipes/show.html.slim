@@ -13,8 +13,8 @@
     .col-5
       h4.long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
       .category.mt-3
-        h3= '部位'
-        h3= '筋肉'
+        - @recipe.categories.each do |category|
+          = category.name
 
 h3.mt-5.mb-4= '詳細'
 .container
