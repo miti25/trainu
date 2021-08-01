@@ -1,5 +1,7 @@
 # coding: utf-8
 
+#categoryは三段階に限定する。 親要素を筋群で分けた場合、子要素は個別の筋肉名称で止め、上部下部などに分けないこと。
+  #例(腕：上腕二頭筋：長頭) (胸：大胸筋：上部)
 shoulder = Category.create(name: '肩')
   deltoid = shoulder.children.create(name: '三角筋')
     %w[前部 背部 側部].each do |name|
