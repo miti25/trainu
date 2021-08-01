@@ -11,9 +11,11 @@ document.addEventListener('turbolinks:load', function() {
     const replaced_index = original_index + move_range
     const replace_howto = howtos_array[replaced_index]
     replace_howto.querySelector('.index_text').textContent = original_index + 1;
+    replace_howto.querySelector('.order_num').value = original_index;
     replace_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${original_index}`);
 
     target_howto.querySelector('.index_text').textContent = replaced_index+ 1;
+    target_howto.querySelector('.order_num').value = replaced_index;
     target_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${replaced_index}`);
     let end_index = []
     if(move_range == 1){
@@ -83,6 +85,7 @@ document.addEventListener('turbolinks:load', function() {
     jQuery(howtos_array[howtos_length - 2]).find('.move_right').show();
     jQuery('.howto').each(function(key, a){
       jQuery(a).find('.index_text').text(key +1);
+      jQuery(a).find('.order_num').val(key);
       jQuery(a).attr('class', `nested-fields col-3 mt-5 howto order-${key}`);
     });
   });
@@ -101,6 +104,7 @@ document.addEventListener('turbolinks:load', function() {
     };
     // 表示順指定
     jQuery(insertedItem).find('.index_text').text(index + 1);
+    jQuery(insertedItem).find('.order_num').val(index);
     jQuery(insertedItem).removeClass('order-');
     jQuery(insertedItem).addClass(`order-${index}`);
     //画像プレビュー表示
