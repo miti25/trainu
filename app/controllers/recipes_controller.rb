@@ -10,6 +10,14 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
     @howtos = @recipe.howtos
+    categories = @recipe.categories.uniq
+    @youngest_categories = categories.each do |category|
+      if category.ancestors?
+        categories.delete_if do |str|
+          category.ancestors.include?(str)
+        end
+      end
+    end
   end
 
   def new
@@ -40,6 +48,7 @@ class RecipesController < ApplicationController
 
   def update
     set_recipe
+    @category_parents = Category.where(ancestry: nil)
     if @recipe.update(recipe_params)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else

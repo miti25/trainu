@@ -4,8 +4,8 @@
     - @recipe.errors.full_messages.each do |message|
       li= message
 
-.container
-  = form_with model: @recipe, local: true do |f|
+= form_with model: @recipe, local: true do |f|
+  .container
     .text-right= f.submit '保存', class: 'btn btn-primary mt-3'
     .col-3
       = f.text_field :name, class: 'form-control form-control-lg', id: 'recipe_name', placeholder: "トレーニング名"
@@ -17,15 +17,18 @@
         - else
           img id='recipe_preview'
       .col-6
-        #word_count.text-right= '残り200文字'
-        = f.text_area :description, rows: 6, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
-        .container.mt-5#select_category
-          = render partial: 'select_category', locals: { f: f }
+        .row
+          h4.col= '概要'
+          #word_count.text-right.col= '残り200文字'
+        = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
+  .container.mt-5.mb-5
+    #select_category
+      = render partial: 'select_category', locals: { f: f }
 
+  .container
     h3.mt-5= '詳細'
-    .container
-      .row#howtos_area
-        = f.fields_for :howtos do |howto|
-          = render 'howto_fields', f: howto, data: { data_association_insertion_traversal: 'closest', association_insertion_method: 'append' }
-        .links.ml-5.mt-5.order-last
-          = link_to_add_association '＋追加', f, :howtos, id: 'add_howto'
+    .row#howtos_area
+      = f.fields_for :howtos do |howto|
+        = render 'howto_fields', f: howto, data: { data_association_insertion_traversal: 'closest', association_insertion_method: 'append' }
+      .links.ml-5.mt-5.order-last
+        = link_to_add_association '＋追加', f, :howtos, id: 'add_howto'

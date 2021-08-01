@@ -17,7 +17,7 @@ a.link id='more_muscle'
         .form-group.form-check
           .row
             - category.children.each do |child|
-              .col-6.mt-2 class='muscle_group'
+              .col-3.mb-3.mt-1 class='muscle_group'
                 li.list-unstyled
                   - if child.has_children?
                     span
@@ -25,8 +25,8 @@ a.link id='more_muscle'
                         | ▶
                   = child.name
                   = f.check_box :category_ids, { multiple: true }, child.id, nil
-                .form-group.form-check class='muscle_parts' style='display:none'
+                .form-group.form-check class='muscle_target' style='display:none'
                   - child.children.each do |grand_child|
                     li.list-unstyled
                       = grand_child.name
-                      = f.check_box :category_ids, { multiple: true }, grand_child.id, nil
+                      = f.check_box :category_ids, { multiple: true, class: 'muscle_target_checkbox' }, grand_child.id, nil

@@ -1,6 +1,6 @@
 .nested-fields.col-3.mt-5 class="howto order-#{f.index}"
-  = f.hidden_field :order_num, value: f.index, class: 'order_num'
   .row
+    = f.text_field :order_num, value: f.index, class: 'order_num'
     h3.col-3 class='index_text'
       = f.index.to_i + 1
     a.col-2.text-right class='move_left'
@@ -9,10 +9,13 @@
       '▶
     .col-3.offset-1.text-right= link_to_remove_association '削除', f, class: 'remove_howto'
   = f.file_field :image, class: 'howto_uploader mb-2', style: 'width: 100%;'
-  - if f.object.image.attached?
-    = image_tag(f.object.mini, class: 'howto_preview mini d-block mx-auto')
-  - else
-      img class='howto_preview no_img'
-  .text-right class='word_count'
-    '残り100文字
-  = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', placeholder: 'コツや意識するポイントなど:'
+  .card
+    .mt-4
+      - if f.object.image.attached?
+        = image_tag(f.object.mini, class: 'howto_preview mini d-block mx-auto')
+      - else
+        img class='howto_preview no_img'
+    .card-body
+      = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', placeholder: 'コツや意識するポイントなど:'
+      .text-right class='word_count'
+        '残り100文字
