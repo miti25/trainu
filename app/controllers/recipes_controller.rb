@@ -12,10 +12,10 @@ class RecipesController < ApplicationController
     @howtos = @recipe.howtos
     categories = @recipe.categories.uniq
     @youngest_categories = categories.each do |category|
-      if category.ancestors?
-        categories.delete_if do |str|
-          category.ancestors.include?(str)
-        end
+      next unless category.ancestors?
+
+      categories.delete_if do |str|
+        category.ancestors.include?(str)
       end
     end
   end
@@ -62,8 +62,8 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image, { category_ids: [] },
-                                    howtos_attributes: %i[description image order_num _destroy id],
-                                    recipe_categories_attributes: %i[recipe_id category_id _destroy id])
+                                   howtos_attributes: %i[description image order_num _destroy id],
+                                   recipe_categories_attributes: %i[recipe_id category_id _destroy id])
   end
 
   def set_recipe

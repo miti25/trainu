@@ -3,7 +3,7 @@ class Recipe < ApplicationRecord
   validates :description, length: { maximum: 200 }
   validate :image_type, :image_size
   belongs_to :user
-  has_many :recipe_categories
+  has_many :recipe_categories, dependent: :destroy
   has_many :categories, through: :recipe_categories
   accepts_nested_attributes_for :recipe_categories, allow_destroy: true
   has_many :howtos, dependent: :destroy
