@@ -9,7 +9,7 @@
       h1= f.text_field :name, class: 'form-control', id: 'recipe_name'
     .row
       .col-sm-3
-          = f.file_field :image, class: 'form-control thumbnail'
+          = f.file_field :image, class: 'form-control'
       .col-sm-5
         = f.text_area :description, rows: 12, class: 'form-control', id: 'recipe_description'
     = f.submit nil, class: 'btn btn-primary mt-3'

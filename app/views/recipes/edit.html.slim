@@ -13,7 +13,7 @@
       .col-5
         = f.file_field :image, id: 'recipe_uploader', class:'mb-2'
         - if @recipe.image.attached?
-          = image_tag(@recipe.thumbnail, id: 'recipe_preview', class: 'thumbnail')
+          = image_tag(@recipe.thumbnail, id: 'recipe_preview' )
         - else
           img id='recipe_preview'
       .col-6

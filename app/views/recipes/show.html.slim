@@ -9,31 +9,34 @@
         = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
   .row
     .col-5
-      = image_tag(@recipe.thumbnail, class: 'thumbnail') if @recipe.image.attached?
+      = image_tag(@recipe.thumbnail) if @recipe.image.attached?
     .col-6
       h3= '概要'
       .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
-.container
-  h3.mt-5 style='display:inline-block;'
-    | 部位
-  strong= '(ターゲット←)'
-  .row
-    - @youngest_categories.each do |category|
-      .col-2.mt-3
-        - category.path.each do |p|
-          li.list-unstyled
-            - unless (p == category)
-              = p.name
-            - else
-              strong = "#{p.name}←"
 
-.container
-  h3.mt-5.mb-4= '詳細'
-  .row
-    - @howtos.map do |howto|
-      .col-sm-3.mt-3 class="order-#{howto.order_num}"
-        h3= howto.order_num + 1
-        .card
-          = image_tag(howto.mini, class:'mini d-block mx-auto card-img-top my-4') if howto.image.attached?
-          .card-body
-            .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")
+- if @youngest_categories.present?
+  .container
+    h3.mt-5 style='display:inline-block;'
+      | 部位
+    strong= '(ターゲット←)'
+    .row
+      - @youngest_categories.each do |category|
+        .col-2.mt-3
+          - category.path.each do |p|
+            li.list-unstyled
+              - unless (p == category)
+                = p.name
+              - else
+                strong = "#{p.name}←"
+
+- if @howtos.present?
+  .container
+    h3.mt-5.mb-4= '詳細'
+    .row
+      - @howtos.map do |howto|
+        .col-sm-3.mt-3 class="order-#{howto.order_num}"
+          h3= howto.order_num + 1
+          .card
+            = image_tag(howto.mini, class:'mini d-block mx-auto card-img-top my-4') if howto.image.attached?
+            .card-body
+              .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")
