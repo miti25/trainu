@@ -1,16 +1,3 @@
 h1 検索結果
-
-.btn= sort_link(@q, :name, default_order: :desc)
-
-- @search_recipes.each do |recipe|
-  .row.mb-4
-    .col-sm-3
-      .thumbnail
-        = render partial: 'image/thumbnail', locals: { recipe: recipe }
-    .col-sm-9
-      .row.mb-3
-        h3= link_to recipe.name, recipe_path(recipe)
-        .align-self-center.ml-2= link_to "by #{recipe.user.name}", admin_user_path(recipe.user)
-      .row
-        = recipe.description
-end
+= sort_link(@q, :created_at, default_order: :desc)
+= render partial: '/shared/recipes_list', collection: @search_recipes, as: :recipe

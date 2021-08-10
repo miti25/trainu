@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
   def home
-    @recipes = current_user.recipes.recent
+    @recipes = Recipe.all.recent
   end
 end

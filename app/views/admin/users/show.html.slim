@@ -1,8 +1,5 @@
 h1 = "#{@user.name}"
 
-.nav.justify-content-end
-  = link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
-
 table.table.table-hover
   tbody
     - if current_user&.admin?

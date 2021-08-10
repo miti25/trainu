@@ -1,21 +1,24 @@
 h1 レシピ一覧
 
-.btn= sort_link(@q, :name, default_order: :desc)
-
 - @recipes.each do |recipe|
-  .row.mb-4.search.delete
-    .col-sm-3
-      = render partial: 'image/thumbnail', locals: { recipe: recipe }
-    .col-sm-7
-      .row.mb-3
-        h3= link_to recipe.name, recipe_path(recipe), class: 'recipe_link'
-        .align-self-center.ml-2= link_to "by #{recipe.user.name}", admin_user_path(recipe.user), class: 'user_link'
-      .row
-        = recipe.description
-    .col-sm-2
+  .row
+    h3= link_to recipe.name, recipe_path(recipe)
+    .align-self-center.ml-2= link_to "by #{recipe.user.name}", admin_user_path(recipe.user)
+    .ml-auto
       = link_to '編集', edit_recipe_path(recipe), class: 'btn btn-primary mr-3'
       = link_to '削除', recipe, method: :delete, remote:true, data: { confirm: "#{recipe.name}を削除します。よろしいですか？"},
         class: 'btn btn-danger'
-end
-
-= link_to '新規登録', new_recipe_path, class: 'btn btn-primary'
+  .row.mb-4
+    - if recipe.image.attached?
+      = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
+    - else
+      p.no-image
+    .col-4
+      h3= '概要'
+      .long_text= simple_format(h(recipe.description), {}, sanitize: false, wrapper_format: "div")
+    .col-4
+      h3= '部位'
+      - recipe.youngest_categories.each do |category|
+        li.list-unstyled
+          - category.path.each do |p|
+            = ":#{p.name}"

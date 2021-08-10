@@ -10,14 +10,7 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
     @howtos = @recipe.howtos
-    categories = @recipe.categories.uniq
-    @youngest_categories = categories.each do |category|
-      next unless category.ancestors?
-
-      categories.delete_if do |str|
-        category.ancestors.include?(str)
-      end
-    end
+    @youngest_categories = @recipe.youngest_categories
   end
 
   def new
@@ -56,14 +49,16 @@ class RecipesController < ApplicationController
     end
   end
 
-  def search; end
+  def search
+    @q = Recipe.ransack(params[:q])
+  end
 
   private
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image, { category_ids: [] },
-                                   howtos_attributes: %i[description image order_num _destroy id],
-                                   recipe_categories_attributes: %i[recipe_id category_id _destroy id])
+                                    howtos_attributes: %i[description image order_num _destroy id],
+                                    recipe_categories_attributes: %i[recipe_id category_id _destroy id])
   end
 
   def set_recipe
