@@ -4,37 +4,39 @@ document.addEventListener('turbolinks:load', function() {
   const howtos_limit = 8
   let howtos_array = Array.from(document.querySelectorAll('.howto'))
   let howtos_length = howtos_array.length
-  // 左右移動メソッド（move_range= 1(right) or -1(left)）
-  function move_howto(obj, move_range){
+  // 左右移動メソッド（direciton= 1(right) or -1(left)）
+  function move_howto(obj, direction){
     const target_howto = obj.target.closest('.howto');
-    const original_index = howtos_array.findIndex(index => index == target_howto)
-    const replaced_index = original_index + move_range
+    const target_index = howtos_array.findIndex(index => index == target_howto)
+    const replaced_index = target_index + direction
     const replace_howto = howtos_array[replaced_index]
-    replace_howto.querySelector('.index_text').textContent = original_index + 1;
-    replace_howto.querySelector('.order_num').value = original_index;
-    replace_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${original_index}`);
+    replace_howto.querySelector('.index_text').textContent = target_index + 1;
+    replace_howto.querySelector('.order_num').value = target_index;
+    replace_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${target_index}`);
 
     target_howto.querySelector('.index_text').textContent = replaced_index+ 1;
     target_howto.querySelector('.order_num').value = replaced_index;
     target_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${replaced_index}`);
     let end_index = []
-    if(move_range == 1){
-      end_index = original_index
-      howtos_array.splice(original_index, 2, howtos_array[replaced_index], howtos_array[original_index])
-    } else if(move_range == -1){
+    if(direction == 1){
+      end_index = target_index
+      howtos_array.splice(target_index, 2, howtos_array[replaced_index], howtos_array[target_index])
+    } else if(direction == -1){
       end_index = replaced_index
-      howtos_array.splice(replaced_index, 2, howtos_array[original_index], howtos_array[replaced_index])
+      howtos_array.splice(replaced_index, 2, howtos_array[target_index], howtos_array[replaced_index])
     }
     if (end_index == 0){
       howtos_array[end_index].querySelector('.move_left').style.display ='none';
       howtos_array[end_index +1].querySelector('.move_left').style.display ='block';
-    } else if (end_index + 1 == howtos_length -1) {
+    };
+    if (end_index + 1 == howtos_length -1) {
       howtos_array[end_index +1].querySelector('.move_right').style.display ='none';
       howtos_array[end_index].querySelector('.move_right').style.display ='block';
     };
   };
-
+  // howto表示限界到達時、追加ボタン非表示
   if (howtos_length >= howtos_limit) document.getElementById('add_howto').style.display ='none';
+  // howtoの左右移動ボタン
   document.querySelectorAll('.move_left').forEach(function(a){
     if (a.closest('.order-0')) a.style.display ='none';
     a.addEventListener('click', function(e){
@@ -126,6 +128,7 @@ document.addEventListener('turbolinks:load', function() {
       const word_count = max - howto_description.val().length;
       jQuery(insertedItem).find('.word_count').html(`残り${word_count}文字`);
     });
+    // 左右移動
     jQuery(insertedItem).find('.move_left').on('click', function(e){
       move_howto(e, -1)
     });
