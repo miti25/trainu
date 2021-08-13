@@ -12,11 +12,15 @@
       .col-5
         = f.file_field :image, id: 'recipe_uploader', class:'mb-2'
         - if @recipe.image.attached?
-          = image_tag(@recipe.thumbnail, id: 'recipe_preview' )
+          .d-flex.flex-row
+            = image_tag(@recipe.thumbnail, id: 'recipe_preview' )
+            = link_to 'X', recipe_image_destroy_path(@recipe), method: :delete, class: 'btn text-primary'
         - else
-          img id='recipe_preview'
+          .d-flex.flex-row
+            img id='recipe_preview'
+            p id='crear_btn' class='btn text-primary'
       .col-6
-        .row
+        .d-flex.flex-row
           h4.col= '概要'
           #word_count.text-right.col= '残り200文字'
         = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"

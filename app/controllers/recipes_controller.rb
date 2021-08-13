@@ -27,12 +27,6 @@ class RecipesController < ApplicationController
     end
   end
 
-  def destroy
-    set_recipe
-    @recipe.destroy
-    redirect_to recipes_path, notice: "レシピ「#{@recipe.name}」を削除しました"
-  end
-
   def edit
     set_recipe
     @categories = Category.all
@@ -44,6 +38,22 @@ class RecipesController < ApplicationController
     @category_parents = Category.where(ancestry: nil)
     if @recipe.update(recipe_params)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    set_recipe
+    @recipe.destroy
+    redirect_to recipes_path, notice: "レシピ「#{@recipe.name}」を削除しました"
+  end
+
+  def image_destroy
+    set_recipe
+    if @recipe.image.attached?
+      @recipe.image.purge
+      redirect_to edit_recipe_path(@recipe)
     else
       render :edit
     end

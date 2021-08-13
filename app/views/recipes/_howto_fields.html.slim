@@ -3,19 +3,18 @@
     = f.hidden_field :order_num, value: f.index, class: 'order_num'
     h3.col-3 class='index_text'
       = f.index.to_i + 1
-    a.col-2.text-right class='move_left'
+    p.btn.text-primary.col-2.text-right class='move_left'
       '◀
-    a.col-2.text-right class='move_right'
+    p.btn.text-primary.col-2.text-right class='move_right'
       '▶
     .col-3.offset-1.text-right= link_to_remove_association '削除', f, class: 'remove_howto'
   = f.file_field :image, class: 'howto_uploader mb-2', style: 'width: 100%;'
   .card
-    .mt-4
+    .card-body
       - if f.object.image.attached?
-        = image_tag(f.object.mini, class: 'howto_preview d-block mx-auto')
+        .mt-4= image_tag(f.object.mini, class: 'howto_preview d-block mx-auto')
       - else
         img class='howto_preview no_img'
-    .card-body
       = f.text_area :description, rows: 6, class: 'form-control mt-3 howto_description', placeholder: 'コツや意識するポイントなど:'
       .text-right class='word_count'
         '残り100文字

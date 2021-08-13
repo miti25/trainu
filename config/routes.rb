@@ -12,4 +12,5 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
+  delete 'recipe_image_delete/:id', to: 'recipes#image_destroy', as: 'recipe_image_destroy'
 end
