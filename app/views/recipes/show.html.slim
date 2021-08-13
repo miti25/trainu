@@ -18,7 +18,7 @@
   .container
     h3.mt-5 style='display:inline-block;'
       | 部位
-    strong= '(ターゲット←)'
+    strong= '(ターゲット◀)'
     .row
       - @youngest_categories.each do |category|
         .col-2.mt-3
@@ -27,7 +27,7 @@
               - unless (p == category)
                 = p.name
               - else
-                strong = "#{p.name}←"
+                strong = "#{p.name}◀"
 
 - if @howtos.present?
   .container
