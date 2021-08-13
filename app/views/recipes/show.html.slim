@@ -37,6 +37,6 @@
         .col-sm-3.mt-3 class="order-#{howto.order_num}"
           h3= howto.order_num + 1
           .card
-            = image_tag(howto.mini, class:'mini d-block mx-auto card-img-top my-4') if howto.image.attached?
+            = image_tag(howto.mini, class:'d-block mx-auto my-4') if howto.image.attached?
             .card-body
               .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")

@@ -3,7 +3,6 @@
   ul#error_explanation
     - @recipe.errors.full_messages.each do |message|
       li= message
-
 = form_with model: @recipe, local: true do |f|
   .container
     .text-right= f.submit '保存', class: 'btn btn-primary mt-3'

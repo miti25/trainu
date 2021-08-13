@@ -12,7 +12,7 @@
   .card
     .mt-4
       - if f.object.image.attached?
-        = image_tag(f.object.mini, class: 'howto_preview mini d-block mx-auto')
+        = image_tag(f.object.mini, class: 'howto_preview d-block mx-auto')
       - else
         img class='howto_preview no_img'
     .card-body

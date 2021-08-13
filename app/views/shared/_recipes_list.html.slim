@@ -8,12 +8,14 @@
         = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
       - else
         p.no-image
-    .col-4
-      h3= '概要'
-      .long_text= simple_format(h(recipe.description), {}, sanitize: false, wrapper_format: "div")
-    .col-3.ml-auto
-      h3= '部位'
-      - recipe.youngest_categories.each do |category|
-        li.list-unstyled
-          - category.path.each do |p|
-            = ":#{p.name}"
+    - if recipe.description.present?
+      .col-4
+        h3= '概要'
+        .long_text= simple_format(h(recipe.description), {}, sanitize: false, wrapper_format: "div")
+    - if recipe.categories.present?
+      .col-3.offset-1
+        h3= '部位'
+        - recipe.youngest_categories.each do |category|
+          li.list-unstyled
+            - category.path.each do |p|
+              = ":#{p.name}"
