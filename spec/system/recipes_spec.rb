@@ -48,9 +48,9 @@ describe 'レシピの管理機能', type: :system do
       context 'ユーザーBがログインしている場合' do
         let(:login_user) { user_b }
 
-        it 'ユーザーBのレシピは表示されるがユーザーAのレシピは表示されない' do
+        it 'ユーザーBのレシピとユーザーAが作成したレシピが表示される' do
           expect(page).to have_content recipe_b.name
-          expect(page).not_to have_content recipe_a.name
+          expect(page).to have_content recipe_a.name
         end
       end
     end
