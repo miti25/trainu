@@ -12,9 +12,10 @@ class Recipe < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
 
   def youngest_categories
-    categories= self.categories.uniq
+    categories = self.categories.uniq
     categories.each do |category|
       next unless category.ancestors?
+
       categories.delete_if do |str|
         category.ancestors.include?(str)
       end

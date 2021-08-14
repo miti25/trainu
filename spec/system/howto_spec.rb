@@ -61,6 +61,7 @@ describe '作り方詳細（howto）の管理機能', type: :system do
         end
         click_on '保存'
       end
+
       it '表示順は入れ替わらない' do
         expect(page.body.index(howto_1.description)).to be < page.body.index(howto_3.description)
       end

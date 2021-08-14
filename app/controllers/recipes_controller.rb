@@ -67,8 +67,8 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:name, :description, :image, { category_ids: [] },
-                                    howtos_attributes: %i[description image order_num _destroy id],
-                                    recipe_categories_attributes: %i[recipe_id category_id _destroy id])
+                                   howtos_attributes: %i[description image order_num _destroy id],
+                                   recipe_categories_attributes: %i[recipe_id category_id _destroy id])
   end
 
   def set_recipe
