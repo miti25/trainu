@@ -1,3 +1,5 @@
 h1 検索結果
 = sort_link(@q, :created_at, default_order: :desc)
+- if @search_recipes.blank?
+  p= '検索ワードに当てはまるレシピはありません。'
 = render partial: '/shared/recipes_list', collection: @search_recipes, as: :recipe
