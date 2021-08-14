@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
-  root 'pages#home'
   resources :recipes do
+    resources :favorites, only: [:create, :destroy]
     collection do
       get 'search'
     end
   end
   delete 'recipe_image_delete/:id', to: 'recipes#image_destroy', as: 'recipe_image_destroy'
+  root 'pages#home'
 end

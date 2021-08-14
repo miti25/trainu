@@ -8,6 +8,8 @@ class Recipe < ApplicationRecord
   accepts_nested_attributes_for :recipe_categories, allow_destroy: true
   has_many :howtos, dependent: :destroy
   accepts_nested_attributes_for :howtos, allow_destroy: true
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_users, through: :favorites, source: :user
   has_one_attached :image
   scope :recent, -> { order(created_at: :desc) }
 

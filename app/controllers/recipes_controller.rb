@@ -11,6 +11,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     @howtos = @recipe.howtos
     @youngest_categories = @recipe.youngest_categories
+    @favorite = Favorite.new
   end
 
   def new
