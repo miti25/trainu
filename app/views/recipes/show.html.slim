@@ -18,8 +18,8 @@
           = link_to recipe_favorites_path(@recipe), method: :post do
             .btn.btn-warning= 'お気に入り登録'
   .row
-    .col-5
-      = image_tag(@recipe.thumbnail) if @recipe.image.attached?
+    - if @recipe.image.attached?
+      .col-5= image_tag(@recipe.thumbnail)
     .col-6
       h3= '概要'
       .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
