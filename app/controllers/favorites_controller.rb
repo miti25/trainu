@@ -1,4 +1,8 @@
 class FavoritesController < ApplicationController
+  def index
+    @favorites = current_user.favorites
+  end
+
   def create
     @favorite = current_user.favorites.create(recipe_id: params[:recipe_id])
     redirect_back(fallback_location: root_path)

@@ -2,12 +2,12 @@
 .container
   .row.col.my-4
     h1= @recipe.name
-    .align-self-center.ml-4= link_to "by #{@recipe.user.name}", admin_user_path(@recipe.user)
+    .align-self-center.ml-4= link_to "by #{@recipe.user.name}", user_path(@recipe.user)
     .ml-auto.mt-3
       - if admin_or_himself?
         = link_to "編集", edit_recipe_path, class: 'btn btn-primary mr-2'
         = link_to '削除', @recipe, method: :delete, data: { confirm: "#{@recipe.name}を削除します。よろしいですか？"}, class: 'btn btn-danger'
-      - elsif current_user.already_favorite?(@recipe)
+      - elsif current_user&.already_favorite?(@recipe)
         .d-flex.d-float.align-items-end
           h4.text-warning= '★'
           = link_to recipe_favorite_path(@recipe), method: :delete do

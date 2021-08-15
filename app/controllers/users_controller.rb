@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class UsersController < ApplicationController
   include SessionsHelper
 
   skip_before_action :login_required, only: %i[show new create]
@@ -20,7 +20,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      redirect_to admin_user_path(@user), notice: "ユーザー「#{@user.name}」を登録しました"
+      redirect_to user_path(@user), notice: "ユーザー「#{@user.name}」を登録しました"
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Admin::UsersController < ApplicationController
   def update
     set_user
     if @user.update(user_params)
-      redirect_to admin_user_url, notice: "ユーザー「#{@user.name}を更新しました"
+      redirect_to user_url, notice: "ユーザー「#{@user.name}を更新しました"
     else
       render :new
     end

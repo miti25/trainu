@@ -7,7 +7,7 @@ describe 'ユーザーの管理機能', type: :system do
     let(:no_confirmation) { build(:user, password_confirmation: 'error_pass') }
 
     before do
-      visit new_admin_user_path
+      visit new_user_path
       fill_in '名前', with: signin_user.name
       fill_in 'メールアドレス', with: signin_user.email
       fill_in 'パスワード', with: signin_user.password
@@ -57,7 +57,7 @@ describe 'ユーザーの管理機能', type: :system do
     describe '非ログイン時' do
       context 'ユーザーBの詳細ページにて' do
         before do
-          visit admin_user_path(user_b)
+          visit user_path(user_b)
         end
 
         it 'ユーザーBの詳細が表示される' do
@@ -66,7 +66,7 @@ describe 'ユーザーの管理機能', type: :system do
 
         it '編集へのリンクが機能しない' do
           expect(page).not_to have_link '編集'
-          visit edit_admin_user_path(user_b)
+          visit edit_user_path(user_b)
           expect(page).to have_current_path login_path, ignore_query: true
         end
 
@@ -89,7 +89,7 @@ describe 'ユーザーの管理機能', type: :system do
 
         context 'ユーザーAの詳細ページにて' do
           before do
-            visit admin_user_path(user_a)
+            visit user_path(user_a)
           end
 
           it 'ユーザー詳細が表示される' do
@@ -99,7 +99,7 @@ describe 'ユーザーの管理機能', type: :system do
           it '編集へのリンクが機能する' do
             expect(page).to have_link '編集'
             click_on '編集'
-            expect(page).to have_current_path edit_admin_user_path(user_a), ignore_query: true
+            expect(page).to have_current_path edit_user_path(user_a), ignore_query: true
           end
 
           it '削除へのリンクが機能する', js: true do
@@ -119,7 +119,7 @@ describe 'ユーザーの管理機能', type: :system do
 
         context 'ユーザーBの詳細ページにて' do
           before do
-            visit admin_user_path(user_b)
+            visit user_path(user_b)
           end
 
           it 'ユーザーBの詳細が表示される' do
@@ -128,7 +128,7 @@ describe 'ユーザーの管理機能', type: :system do
 
           it '編集へのリンクが機能しない' do
             expect(page).not_to have_link '編集'
-            visit edit_admin_user_path(user_b)
+            visit edit_user_path(user_b)
             expect(page).to have_current_path root_path, ignore_query: true
           end
 

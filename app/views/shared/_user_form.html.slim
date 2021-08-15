@@ -3,7 +3,7 @@
     - user.errors.full_messages.each do |message|
       li= message
 
-= form_with model: [:admin, user], local: true do |f|
+= form_with model: user, local: true do |f|
   - if current_user.present? && current_user.admin?
     .form-check
       = f.label :admin, class: 'form-check-label' do

@@ -17,7 +17,7 @@ describe '管理者権限' do
 
     context 'ユーザーAの詳細ページにて' do
       before do
-        visit admin_user_path(user_a)
+        visit user_path(user_a)
       end
 
       it 'ユーザー詳細が表示される' do
@@ -27,7 +27,7 @@ describe '管理者権限' do
       it '編集へのリンクが機能する' do
         expect(page).to have_link '編集'
         click_on '編集'
-        expect(page).to have_current_path edit_admin_user_path(user_a), ignore_query: true
+        expect(page).to have_current_path edit_user_path(user_a), ignore_query: true
       end
 
       it '削除へのリンクが機能する', js: true do
