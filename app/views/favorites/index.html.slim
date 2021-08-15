@@ -1,0 +1,4 @@
+h1= 'お気に入り'
+- if @recipes.blank?
+  p= 'あなたのお気に入りレシピはありません。'
+= render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
