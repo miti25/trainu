@@ -6,8 +6,8 @@
       - if current_user
         li.nav-item= link_to 'レシピ作成', new_recipe_path, class: 'btn btn-primary mx-2'
         li.bav-item.dropdown
-          button type="button" class="btn border-secondary rounded dropdown-toggle" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          ul.dropdown-menu.dropdown-menu-right aria-labelledby="dropdownMenuButton"
+          button type='button' class='btn border-secondary rounded dropdown-toggle' id='dropdownMenuButton1' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
+          ul.dropdown-menu.dropdown-menu-right aria-labelledby='dropdownMenuButton'
             li.dropdown-item= link_to 'ユーザー', user_path(current_user)
             li.dropdown-item= link_to 'マイレシピ', recipes_path
             li.dropdown-item= link_to 'お気に入り一覧', user_favorites_path(current_user)
