@@ -1,6 +1,6 @@
 .d-flex.align-items-center.mb-2
   h2= '検索結果'
-  .ml-2= "「#{params[:q][:name_or_description_or_categories_name_cont]}」"
+  .ml-2= "「#{params[:q][:name_or_description_or_categories_name_cont_any]}」"
   = "のレシピ#{@search_recipes.count}件"
 = sort_link(@q, :created_at, default_order: :desc)
 - if @search_recipes.blank?

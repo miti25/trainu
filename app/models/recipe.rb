@@ -24,6 +24,16 @@ class Recipe < ApplicationRecord
     end
   end
 
+  scope :by_any_words, -> (text){
+    words = text.split(/[\p{blank}\s]+/)
+    searchs = search(name_or_description_or_categories_name_cont_any: words).result(distinct: true)
+    searchs.uniq
+  }
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[name_or_description_or_categories_name_cont_any]
+  end
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[name description]
   end
