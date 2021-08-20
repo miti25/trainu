@@ -1,14 +1,11 @@
-h1 = "#{@user.name}"
+.d-flex
+  h1 = "#{@user.name}"
+  .ml-auto
+    - if admin_or_himself?
+      = link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3'
 
 table.table.table-hover
   tbody
-    - if current_user&.admin?
-      tr
-        th= User.human_attribute_name(:admin)
-        td= @user.admin? ? '有' : '無'
-    tr
-      th= User.human_attribute_name(:id)
-      td= @user.id
     tr
       th= User.human_attribute_name(:name)
       td= @user.name
@@ -18,10 +15,7 @@ table.table.table-hover
     tr
       th= User.human_attribute_name(:created_at)
       td= @user.created_at
-    tr
-      th= User.human_attribute_name(:updated_at)
-      td= @user.updated_at
 
-- if admin_or_himself?
-  = link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3'
-  = link_to '削除', @user, method: :delete, data: {confirm: "ユーザー「#{@user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger'
+.d-flex.justify-content-end
+  - if admin_or_himself?
+    = link_to 'アカウント削除', @user, method: :delete, data: {confirm: "ユーザー「#{@user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger'
