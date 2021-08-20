@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :favorites, only: %i[create destroy]
     collection do
       get 'search'
+      get 'category'
     end
   end
 

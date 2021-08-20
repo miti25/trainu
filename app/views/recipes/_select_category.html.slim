@@ -3,12 +3,12 @@ a.link id='more_muscle'
   | 筋肉から選ぶ
 #main_selection
   .row
-    - @category_parents.each do |category|
+    - @root_categories.each do |category|
       .ml-3.mt-2.form-inline.parent_checkbox
         h5.form-check-label= category.name
         .form-check-input.checkbox= f.check_box :category_ids, { multiple: true, class: "check_#{category.id}" }, category.id, nil
 #detail_selection
-  - @category_parents.each do |category|
+  - @root_categories.each do |category|
     .card.mt-2
       .card-body
         .card-title.form-inline

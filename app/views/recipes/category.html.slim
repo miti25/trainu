@@ -1,0 +1,8 @@
+.d-flex.align-items-center.mb-2
+  h2= '検索結果'
+  .ml-2= @category.name
+  = "のレシピ#{@recipes.count}件"
+= sort_link(@q, :created_at, default_order: :desc)
+- if @recipes.blank?
+  p= '検索ワードに当てはまるレシピはありません。'
+= render partial: '/shared/recipes_list', collection: @recipes, as: :recipe

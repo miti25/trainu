@@ -31,12 +31,12 @@ class RecipesController < ApplicationController
   def edit
     set_recipe
     @categories = Category.all
-    @category_parents = Category.where(ancestry: nil)
+    @root_categories = Category.where(ancestry: nil)
   end
 
   def update
     set_recipe
-    @category_parents = Category.where(ancestry: nil)
+    @root_categories = Category.where(ancestry: nil)
     if @recipe.update(recipe_params)
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
@@ -62,6 +62,11 @@ class RecipesController < ApplicationController
 
   def search
     @q = Recipe.ransack(params[:q])
+  end
+
+  def category
+    @category = Category.find(params[:format])
+    @recipes = @category.recipes
   end
 
   private
