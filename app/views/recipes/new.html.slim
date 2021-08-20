@@ -1,4 +1,4 @@
-h1 レシピ作成
+h2 レシピ名
 
 - if @recipe.errors.present?
   ul#error_explanation
@@ -7,5 +7,5 @@ h1 レシピ作成
 
 .mt-5
   = form_with model: [@recipe], local: true do |f|
-    = f.text_field :name, class: 'form-control', placeholder: 'レシピ名を入力'
-    .text-center= f.submit 'レシピ詳細作成へ', class: 'btn btn-primary mt-5'
+    = f.text_field :name, class: 'form-control', placeholder: '30文字以内'
+    .text-center= f.submit 'レシピ詳細の入力に進む', class: 'btn btn-primary mt-5'

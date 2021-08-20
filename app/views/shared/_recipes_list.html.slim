@@ -3,7 +3,7 @@
     .col-4
       .d-flex.flex-row
         h3= link_to recipe.name, recipe_path(recipe)
-        .align-self-center.ml-2= link_to "by #{recipe.user.name}", user_path(recipe.user)
+        .align-self-center.ml-2= link_to ":by #{recipe.user.name}", user_path(recipe.user)
       - if recipe.image.attached?
         = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
       - else
@@ -11,7 +11,7 @@
     .col-8.text-muted
       - if recipe.description.present?
         .d-block
-          h3= '概要'
+          h4= '概要'
           .col= truncate(recipe.description, length: 150)
       - if recipe.categories.present?
         .d-block.mt-3
