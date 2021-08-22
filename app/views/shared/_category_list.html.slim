@@ -1,0 +1,14 @@
+ul.list-group.mx-3
+  .d-flex
+    = category.name
+  .flex-column.border-left.ml-2
+    - category.children.each do |child|
+      li.list-unstyled.list-item
+        .d-flex.ml-2
+          = child.name if recipe.categories.include?(child)
+        ul.list-group
+          .flex-column.border-left.ml-3
+            - child.children.each do |grand_child|
+              li.list-unstyled.list-item
+                .d-flex.ml-2
+                  = grand_child.name if recipe.categories.include?(grand_child)

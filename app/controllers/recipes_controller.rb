@@ -10,7 +10,7 @@ class RecipesController < ApplicationController
   def show
     @recipe = Recipe.find(params[:id])
     @howtos = @recipe.howtos
-    @youngest_categories = @recipe.youngest_categories
+    @root_categories = @recipe.root_categories
     @favorite = Favorite.new
   end
 
@@ -38,6 +38,9 @@ class RecipesController < ApplicationController
     set_recipe
     @root_categories = Category.where(ancestry: nil)
     if @recipe.update(recipe_params)
+      @recipe.categories.each do |category|
+        @recipe.category_ids = @recipe.category_ids | category.ancestor_ids
+      end
       redirect_to recipe_url, notice: "レシピ「#{@recipe.name}」を更新しました"
     else
       render :edit

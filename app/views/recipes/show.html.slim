@@ -24,20 +24,12 @@
       h3= '概要'
       .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
 
-- if @youngest_categories.present?
+- if @recipe.categories.present?
   .container
-    h3.mt-5 style='display:inline-block;'
+    h3.mt-5
       | 部位
-    strong= '(ターゲット◀)'
-    .row.col
-      - @youngest_categories.each do |category|
-        .col-2.mt-3
-          - category.path.each do |p|
-            li.list-unstyled
-              - unless (p == category)
-                = p.name
-              - else
-                strong = "#{p.name}◀"
+    .row
+      = render partial: '/shared/category_list', collection: @root_categories, as: :category, locals: { recipe: @recipe}
 
 - if @howtos.present?
   .container
