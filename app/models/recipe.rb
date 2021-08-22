@@ -23,12 +23,16 @@ class Recipe < ApplicationRecord
       end
     end
   end
-
-  scope :by_any_words, lambda { |text|
-    words = text.split(/[\p{blank}\s]+/)
-    searchs = search(name_or_description_or_categories_name_cont_any: words).result(distinct: true)
-    searchs.uniq
-  }
+  def root_categories
+    categories = self.categories.uniq
+    categories.each do |category|
+      if category.root?
+        categories.delete_if do |str|
+          category.descendants.include?(str)
+        end
+      end
+    end
+  end
 
   def self.ransackable_scopes(_auth_object = nil)
     %i[name_or_description_or_categories_name_cont_any]

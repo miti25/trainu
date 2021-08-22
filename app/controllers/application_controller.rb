@@ -10,9 +10,7 @@ class ApplicationController < ActionController::Base
 
   def set_search
     @q = Recipe.ransack(params[:q])
-    return if params[:q].blank?
-
-    @search_recipes = Recipe.by_any_words(params[:q][:name_or_description_or_categories_name_cont_any])
+    @search_recipes = @q.result(distinct: true)
   end
 
   def current_user
