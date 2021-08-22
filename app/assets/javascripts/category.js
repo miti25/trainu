@@ -24,8 +24,8 @@ document.addEventListener('turbolinks:load', function() {
     if (main_selection.classList.contains('toggle_none')){
       more_muscle.innerHTML = '選択肢を減らす';
       detail_selection.style.display = 'block';
-      document.querySelectorAll('.child_list_checkbox').forEach(function(a){
-        if(a.checked){
+      document.querySelectorAll('.child_checkbox').forEach(function(a){
+        if (a.checked){
           const parent_list = a.closest('.parent_list')
           a.closest('.child_list').style.display = 'block';
           parent_list.classList.add('displaied');

@@ -29,4 +29,4 @@ a.link id='more_muscle'
                       - child.children.each do |grand_child|
                         li.list-unstyled
                           = grand_child.name
-                          = f.check_box :category_ids, { multiple: true,id: "category_#{grand_child.id}" }, grand_child.id, nil
+                          = f.check_box :category_ids, { multiple: true, class: 'child_checkbox', id: "category_#{grand_child.id}" }, grand_child.id, nil
