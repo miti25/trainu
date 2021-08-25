@@ -11,29 +11,28 @@
         .d-flex.d-float.align-items-end
           h4.text-warning= '★'
           = link_to recipe_favorite_path(@recipe), method: :delete do
-            .btn.btn-light#favorite_btn= 'お気に入り解除'
+            .btn.btn-light#favorite_btn お気に入り解除
       - elsif current_user
         .d-flex.d-float.align-items-end
           h4.text-muted= '☆'
           = link_to recipe_favorites_path(@recipe), method: :post do
-            .btn.btn-warning#favorite_btn= 'お気に入り登録'
+            .btn.btn-warning#favorite_btn お気に入り登録
   .row
     - if @recipe.image.attached?
       .col-5= image_tag(@recipe.thumbnail)
     .col-6
-      h3= '概要'
+      h3.color_bar 概要
       .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
 
 - if @recipe.categories.present?
   .container
-    h3.mt-5
-      | 部位
+    h3.color_bar.mt-5 部位
     .row
       = render partial: '/shared/category_list', collection: @root_categories, as: :category, locals: { recipe: @recipe}
 
 - if @howtos.present?
   .container
-    h3.mt-5.mb-4= '詳細'
+    h3.color_bar.mt-5.mb-4 詳細
     .row
       - @howtos.map do |howto|
         .col-sm-3.mt-3 class="order-#{howto.order_num}"

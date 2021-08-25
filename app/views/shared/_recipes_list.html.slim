@@ -1,18 +1,16 @@
 .container.my-5.border-bottom
   .row.mb-4
-    .col-12.d-flex.flex-row
+    .col-12.d-flex
       h3= link_to recipe.name, recipe_path(recipe)
       .align-self-center.ml-2= link_to ":by #{recipe.user.name}", user_path(recipe.user)
     - if recipe.image.attached?
-      .col-5
+      .col-4
         = link_to image_tag(recipe.thumbnail), recipe_path(recipe)
-    .col-7.text-muted
+    .col-8.text-muted
       - if recipe.description.present?
-        .d-block
-          h4= '概要'
-          .col= truncate(recipe.description, length: 150)
+        .col= truncate(recipe.description, length: 150)
       - if recipe.categories.present?
-        .d-block.mt-3
-          h4= '部位'
-          .row.col
+        .d-block.mt-3.ml-3
+          h5 部位
+          .row.mb-3
             = render partial: '/shared/category_list', collection: recipe.root_categories, as: :category, locals:{recipe: recipe}

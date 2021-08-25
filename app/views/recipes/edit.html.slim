@@ -26,7 +26,7 @@
         = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
   .container.mt-5.mb-5
     #select_category
-      = render partial: 'select_category', locals: { f: f }
+      = render partial: 'select_category', locals: { f: f , categories: @root_categories}
 
   .container
     h3.mt-5= '詳細'

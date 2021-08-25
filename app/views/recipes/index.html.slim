@@ -1,4 +1,4 @@
-h2 作成レシピ一覧
+h2.color_bar マイレシピ
 - if @recipes.blank?
-  p= 'あなたの作成したレシピはありません。'
+  p あなたの作成したレシピはありません。
 = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe

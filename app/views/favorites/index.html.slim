@@ -1,4 +1,4 @@
-h2= 'お気に入り'
+h2.color_bar お気に入り
 - if @recipes.blank?
-  p= 'あなたのお気に入りレシピはありません。'
+  p あなたがお気に入登録したレシピはありません。
 = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
