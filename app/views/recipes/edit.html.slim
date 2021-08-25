@@ -5,13 +5,13 @@
       li= message
 = form_with model: @recipe, local: true do |f|
   .container
-    #title_count
+    #title_count.mb-2
       | 残り30文字
     .d-flex.mb-4
       = f.text_field :name, class: 'form-control form-control-lg', id: 'recipe_title', placeholder: "トレーニング名"
       .ml-3.text-right= f.submit '保存', class: 'btn btn-primary mt-3'
     .row
-      .col-5
+      .col-lg-5
         = f.file_field :image, id: 'recipe_uploader', class:'mb-2'
         - if @recipe.image.attached?
           .d-flex.flex-row
@@ -21,12 +21,12 @@
           .d-flex.flex-row
             img id='recipe_preview'
             p id='crear_btn' class='btn text-primary'
-      .col-6
-        .d-flex.flex-row
-          h4.col= '概要'
-          .text-right.col id='description_count'
+      .col-lg-6
+        .d-flex.flex-row.mt-2
+          h4 概要
+          #description_count.ml-auto
             | 残り200文字
-        = f.text_area :description, rows: 12, class: 'form-control ml-3', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
+        = f.text_area :description, rows: 12, class: 'form-control', id: 'recipe_description', placeholder: "トレーニングの概要:　使う道具やどんな時にやりたいかなど"
   .container.mt-5.mb-5
     #select_category
       = render partial: 'select_category', locals: { f: f , categories: @root_categories}

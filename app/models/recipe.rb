@@ -48,6 +48,10 @@ class Recipe < ApplicationRecord
   end
 
   def thumbnail
-    image.variant(resize: '270x360').processed
+    image.variant(resize: '300x400').processed
+  end
+
+  def mini
+    image.variant(resize: '240x320').processed
   end
 end

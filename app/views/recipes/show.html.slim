@@ -19,8 +19,8 @@
             .btn.btn-warning#favorite_btn お気に入り登録
   .row
     - if @recipe.image.attached?
-      .col-5= image_tag(@recipe.thumbnail)
-    .col-6
+      .col-lg-5= image_tag(@recipe.thumbnail)
+    .col-md-6
       h3.color_bar 概要
       .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
 
@@ -32,12 +32,11 @@
 
 - if @howtos.present?
   .container
-    h3.color_bar.mt-5.mb-4 詳細
+    h3.color_bar.mt-5.mb-2 詳細
     .row
       - @howtos.map do |howto|
-        .col-sm-3.mt-3 class="order-#{howto.order_num}"
-          h3= howto.order_num + 1
-          .card
-            = image_tag(howto.mini, class:'d-block mx-auto my-4') if howto.image.attached?
-            .card-body
-              .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")
+        .col-lg-3 class='howto_field'
+          .mt-3 class="order-#{howto.order_num} howto_block"
+            h3= howto.order_num + 1
+            = image_tag (howto.mini) if howto.image.attached?
+            .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")

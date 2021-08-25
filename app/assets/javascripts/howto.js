@@ -12,11 +12,11 @@ document.addEventListener('turbolinks:load', function() {
     const replace_howto = howtos_array[replaced_index]
     replace_howto.querySelector('.index_text').textContent = target_index + 1;
     replace_howto.querySelector('.order_num').value = target_index;
-    replace_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${target_index}`);
+    replace_howto.setAttribute('class', `nested-fields col-lg-3 mt-5 howto order-${target_index}`);
 
     target_howto.querySelector('.index_text').textContent = replaced_index+ 1;
     target_howto.querySelector('.order_num').value = replaced_index;
-    target_howto.setAttribute('class', `nested-fields col-3 mt-5 howto order-${replaced_index}`);
+    target_howto.setAttribute('class', `nested-fields col-lg-3 mt-5 howto order-${replaced_index}`);
     let end_index = []
     if(direction == 1){
       end_index = target_index
@@ -88,7 +88,7 @@ document.addEventListener('turbolinks:load', function() {
     jQuery('.howto').each(function(key, a){
       jQuery(a).find('.index_text').text(key +1);
       jQuery(a).find('.order_num').val(key);
-      jQuery(a).attr('class', `nested-fields col-3 mt-5 howto order-${key}`);
+      jQuery(a).attr('class', `nested-fields col-lg-3 mt-5 howto order-${key}`);
     });
   });
 

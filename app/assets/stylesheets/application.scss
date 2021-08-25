@@ -1,20 +1,25 @@
 @import "bootstrap";
+.howto_field{
+  display: block;
+  width: 300px;
+}
+.howto_block{
+  display: block;
+  width: 240px;
+  height: auto;
+}
 
 .thumbnail{
   display: block;
-  width: 270px;
-  height: 360px;
-  .no-image{
-    background-color: lightgray;
-    display: block;
-    width: 270px;
-    height: 360px;
-  }
+  width: 300px;
+  height: auto;
+  max-height: 400px;
 }
 .mini{
   display: block;
-  width: 180px;
-  height: 240px;
+  width: 240px;
+  height: auto;
+  max-height: 320px;
 }
 
 .long_text{
