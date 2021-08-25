@@ -1,5 +1,6 @@
 
 document.addEventListener('turbolinks:load', function() {
+  // 画像表示要素
   const uploader = document.getElementById('recipe_uploader');
   const crear_btn = document.getElementById('crear_btn')
   const preview = document.getElementById('recipe_preview');
@@ -24,10 +25,17 @@ document.addEventListener('turbolinks:load', function() {
     crear_btn.innerHTML = '';
   });
 
-  // recipe概要テキスト数カウント
-  document.querySelector('#recipe_description').onkeyup = function(e){
+  // テキストカウント要素
+  // recipeタイトルカウント
+  document.getElementById('recipe_title').onkeyup = function(e){
+    const max = 30
+    const word_count = max - e.target.value.length
+    document.getElementById('title_count').innerHTML = '残り' + word_count + '文字'
+  };
+  // recipe概要カウント
+  document.getElementById('recipe_description').onkeyup = function(e){
     const max = 200
     const word_count = max - e.target.value.length
-    document.querySelector('#word_count').innerHTML = '残り' + word_count + '文字'
+    document.getElementById('description_count').innerHTML = '残り' + word_count + '文字'
   };
 });
