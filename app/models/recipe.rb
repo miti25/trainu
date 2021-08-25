@@ -23,13 +23,14 @@ class Recipe < ApplicationRecord
       end
     end
   end
+
   def root_categories
     categories = self.categories.uniq
     categories.each do |category|
-      if category.root?
-        categories.delete_if do |str|
-          category.descendants.include?(str)
-        end
+      next unless category.root?
+
+      categories.delete_if do |str|
+        category.descendants.include?(str)
       end
     end
   end
