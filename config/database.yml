@@ -13,6 +13,7 @@ development:
 
 test:
   <<: *default
+  host: <%= ENV['PGHOST'] || 'db' %>
   database: trainu_test
 
 production:
