@@ -114,7 +114,7 @@ describe 'レシピの管理機能', type: :system do
       before do
         visit new_recipe_path
         fill_in 'recipe[name]', with: recipe_name
-        click_button 'レシピ詳細作成へ'
+        click_button 'レシピ詳細の入力に進む'
       end
 
       context 'レシピが正常だった場合' do
