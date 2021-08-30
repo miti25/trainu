@@ -9,16 +9,20 @@ shoulder = Category.create(name: '肩')
     end
 
 arm = Category.create(name: '腕')
-  biceps_brachii, triceps_brachii = arm.children.create(
+  biceps_brachii, triceps_brachii, brachialis, brachioradialis, flexor_forearm, extensor_forearm  = arm.children.create(
     [
       {name: '上腕二頭筋'},
       {name: '上腕三頭筋'},
+      {name: '上腕筋'},
+      {name: '腕撓骨筋'},
+      {name: '前腕屈筋'},
+      {name: '前腕伸筋'},
     ]
   )
     %w[長頭 短頭].each do |name|
       biceps_brachii.children.create(name: name)
     end
-    %w[長頭 短頭 外側頭].each do |name|
+    %w[長頭 内側頭 外側頭].each do |name|
       triceps_brachii.children.create(name: name)
     end
 
@@ -30,8 +34,26 @@ chest = Category.create(name: '胸')
       {name: '前鋸筋'},
     ]
   )
-    %w[上部 中部 下部].each do |name|
+    %w[上部 中部 下部 中央部].each do |name|
       pectoralis_major.children.create(name: name)
+    end
+
+back = Category.create(name: '背中')
+  trapezius, latissimus, erector_spinae, supraspinatus, infraspinatus, rhomboid = back.children.create(
+    [
+      {name: '僧帽筋'},
+      {name: '広背筋'},
+      {name: '脊柱起立筋'},
+      {name: '棘上筋'},
+      {name: '棘下筋'},
+      {name: '菱形筋'},
+    ]
+  )
+    %w[上部 中部 下部].each do |name|
+      trapezius.children.create(name: name)
+    end
+    %w[上部 下部].each do |name|
+      latissimus.children.create(name: name)
     end
 
 abdominal = Category.create(name: '腹')
@@ -47,44 +69,35 @@ abdominal = Category.create(name: '腹')
       rectus_abdominis.children.create(name: name)
     end
 
-back = Category.create(name: '背中')
-  trapezius, latissimus, erector_spinae = back.children.create(
-    [
-      {name: '僧帽筋'},
-      {name: '広背筋'},
-      {name: '脊柱起立筋'},
-    ]
-  )
-    %w[上部 中部 下部].each do |name|
-      trapezius.children.create(name: name)
-    end
-    %w[上部 下部].each do |name|
-      latissimus.children.create(name: name)
-    end
-
 buttocks = Category.create(name: '尻')
   gluteus_maximus = buttocks.children.create(name: '大臀筋')
+  %w[上部 下部].each do |name|
+    gluteus_maximus.children.create(name: name)
+  end
 
 thigh = Category.create(name: '太もも')
-  quadriceps_femoris, hamstring, adductor = thigh.children.create(
+  quadriceps_femoris, adductor, sartorius, hamstring= thigh.children.create(
     [
       {name: '大腿四頭筋'},
-      {name: 'ハムストリングス'},
       {name: '内転筋'},
+      {name: '縫工筋'},
+      {name: 'ハムストリングス'},
     ]
   )
     %w[大腿直筋 内側広筋 外側広筋 中間広筋].each do |name|
       quadriceps_femoris.children.create(name: name)
     end
-    %W[大腿二頭筋長頭 大腿二頭筋短頭 半膜様筋 半腱様筋].each do |name|
+    %W[大腿二頭筋 半膜様筋 半腱様筋].each do |name|
       hamstring.children.create(name: name)
     end
 
 calf = Category.create(name: 'ふくらはぎ')
-  gastrocnemius, soleus = calf.children.create(
+  gastrocnemius, soleus, peroneus, tibialis_anterior= calf.children.create(
     [
       {name: '腓腹筋'},
       {name: 'ヒラメ筋'},
+      {name: '腓骨筋'},
+      {name: '前脛骨筋'},
     ]
   )
     %w[内側頭 外側頭].each do |name|
