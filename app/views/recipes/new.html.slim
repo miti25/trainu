@@ -1,11 +1,10 @@
-h2 レシピ名
-
+- provide(:title, "レシピ作成")
 - if @recipe.errors.present?
   ul#error_explanation
     - @recipe.errors.full_messages.each do |message|
       li= message
-
-.mt-5
+h4 レシピ名
+.mt-3
   = form_with model: [@recipe], local: true do |f|
     = f.text_field :name, class: 'form-control', placeholder: '30文字以内'
     .text-center= f.submit 'レシピ詳細の入力に進む', class: 'btn btn-primary mt-5'
