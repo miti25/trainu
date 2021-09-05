@@ -35,8 +35,8 @@
     h3.color_bar.mt-5.mb-2 詳細
     .row
       - @howtos.map do |howto|
-        .col-lg-3 class='howto_field'
-          .mt-3 class="order-#{howto.order_num} howto_block"
+        .col-lg-3 class="howto_field order-#{howto.order_num}"
+          .mt-3 class='howto_block'
             h3= howto.order_num + 1
             = image_tag (howto.mini) if howto.image.attached?
             .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")
