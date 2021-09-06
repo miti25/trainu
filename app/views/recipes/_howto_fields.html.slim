@@ -1,9 +1,9 @@
-.nested-fields.col-lg-3.mt-5 class="howto order-#{f.index}"
+.nested-fields.col-lg-3.mt-5 class="howto order-#{f.object.order_num}"
   .howto_block
     .row
-      = f.hidden_field :order_num, value: f.index, class: 'order_num'
+      = f.text_field :order_num, value: f.object.order_num, class: 'order_num'
       h3.col-3 class='index_text'
-        = f.index.to_i + 1
+        = f.object.order_num.to_i + 1
       a.col-2.text-right class='move_left'
         | ◀
       a.col-2.text-right class='move_right'
