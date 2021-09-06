@@ -4,12 +4,12 @@ class RecipesController < ApplicationController
   skip_before_action :login_required, only: %i[show search]
 
   def index
-    @recipes = current_user.recipes.recent
+    @recipes = current_user.recipes.includes([:recipe_categories, :categories]).with_attached_image.recent
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
-    @howtos = @recipe.howtos
+    set_recipe
+    @howtos = @recipe.howtos.with_attached_image
     @root_categories = @recipe.root_categories
     @favorite = Favorite.new
   end
@@ -30,6 +30,7 @@ class RecipesController < ApplicationController
 
   def edit
     set_recipe
+    @howtos = @recipe.howtos.with_attached_image
     @categories = Category.all
     @root_categories = Category.where(ancestry: nil)
   end
@@ -64,12 +65,12 @@ class RecipesController < ApplicationController
   end
 
   def search
-    @q = Recipe.ransack(params[:q])
+    @q = Recipe.([:user, :recipe_categories, :categories]).with_attached_image.ransack(params[:q])
   end
 
   def category
     @category = Category.find(params[:format])
-    @recipes = @category.recipes
+    @recipes = @category.recipes.includes([:user, :recipe_categories, :categories]).with_attached_image
   end
 
   private

@@ -35,7 +35,7 @@
   .container
     h3.mt-5= '詳細'
     .row#howtos_area
-      = f.fields_for :howtos do |howto|
+      = f.fields_for :howtos, @howtos do |howto|
         = render 'howto_fields', f: howto, data: { data_association_insertion_traversal: 'closest', association_insertion_method: 'append' }
       .links.ml-5.mt-5.order-last
         = link_to_add_association '＋追加', f, :howtos, id: 'add_howto'

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_search
-    @q = Recipe.ransack(params[:q])
+    @q = Recipe.includes([:user, :recipe_categories, :categories]).with_attached_image.ransack(params[:q])
     @search_recipes = @q.result(distinct: true)
   end
 
