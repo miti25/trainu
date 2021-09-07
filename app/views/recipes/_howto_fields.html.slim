@@ -11,7 +11,7 @@
       .col-3.offset-1.text-right= link_to_remove_association '削除', f, class: 'remove_howto'
     = f.file_field :image, class: 'howto_uploader mb-2', style: 'width: 100%;'
     - if f.object.image.attached?
-      .mt-2= image_tag(f.object.mini, class: 'howto_preview d-block mx-auto')
+      .mt-2= image_tag(f.object.mini, class: 'howto_preview mini d-block mx-auto')
     - else
       img class='howto_preview no_img'
     = f.text_area :description, rows: 6, class: 'form-control howto_description', placeholder: 'コツや意識するポイントなど:'
