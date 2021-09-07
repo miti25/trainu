@@ -2,21 +2,20 @@
 .d-flex
   h1 = "#{@user.name}"
   .ml-auto
-    - if admin_or_himself?
-      = link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3'
+    = link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3' if admin_or_himself?
 
 table.table.table-hover
   tbody
     tr
       th= User.human_attribute_name(:name)
       td= @user.name
-    tr
-      th= User.human_attribute_name(:email)
-      td= @user.email
+    - if admin_or_himself?
+      tr
+        th= User.human_attribute_name(:email)
+        td= @user.email
     tr
       th= User.human_attribute_name(:created_at)
       td= @user.created_at
 
 .d-flex.justify-content-end
-  - if admin_or_himself?
-    = link_to 'アカウント削除', @user, method: :delete, data: {confirm: "ユーザー「#{@user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger'
+  = link_to 'アカウント削除', @user, method: :delete, data: {confirm: "ユーザー「#{@user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger' if admin_or_himself?
