@@ -10,6 +10,7 @@
       - if recipe.description.present?
         .col= truncate(recipe.description, length: 150)
       - if recipe.categories.present?
-        .d-block.mt-3.ml-3
-          .row.mb-3
+        .d-block.mt-3.ml-3 class='list_category'
+          div ターゲット部位:
+          .row.mb-3.ml-2
             = render partial: '/shared/category_list', collection: recipe.root_categories, as: :category, locals: { recipe: recipe }

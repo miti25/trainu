@@ -22,21 +22,21 @@
       .col-lg-5= image_tag(@recipe.thumbnail)
     .col-md-6
       h3.color_bar 概要
-      .long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
+      .col.long_text= simple_format(h(@recipe.description), {}, sanitize: false, wrapper_format: "div")
 
 - if @recipe.categories.present?
   .container
     h3.color_bar.mt-5 ターゲット部位
-    .row
+    .col.row
       = render partial: '/shared/category_list', collection: @root_categories, as: :category, locals: { recipe: @recipe}
 
 - if @howtos.present?
   .container
     h3.color_bar.mt-5.mb-2 詳細
-    .row
+    .col.row
       - @howtos.map do |howto|
         .col-lg-3 class="howto_field order-#{howto.order_num}"
           .mt-3 class='howto_block'
             h3= howto.order_num + 1
-            = image_tag (howto.mini) if howto.image.attached?
+            = image_tag(howto.mini, class: 'mini') if howto.image.attached?
             .long_text= simple_format(h(howto.description), {}, sanitize: false, wrapper_format: "div")
