@@ -26,7 +26,7 @@
 
 - if @recipe.categories.present?
   .container
-    h3.color_bar.mt-5 部位
+    h3.color_bar.mt-5 ターゲット部位
     .row
       = render partial: '/shared/category_list', collection: @root_categories, as: :category, locals: { recipe: @recipe}
 

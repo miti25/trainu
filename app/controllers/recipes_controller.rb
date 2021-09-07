@@ -37,6 +37,7 @@ class RecipesController < ApplicationController
 
   def update
     set_recipe
+    @recipe.categories.distinct
     @root_categories = Category.where(ancestry: nil)
     if @recipe.update(recipe_params)
       @recipe.categories.each do |category|
