@@ -1,17 +1,21 @@
 - provide(:title, "#{@user.name}さんのページ")
 .row
-  .col-lg-3.mt-4
+  .col-lg-3
     .card
       .card-body
-        .d-flex
-          h4.card-title.text-break = @user.name
-          .ml-auto= link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3' if admin_or_himself?
+        h4.d-inline.card-title.text-break = @user.name
+        .d-inline.d-flex.justify-content-end= link_to '編集', edit_user_path(@user), class: '' if admin_or_himself?
         .text-muted= "登録日: #{@user.created_at.strftime('%F')}"
       .card-body
-        h5 お気に入りレシピ
-        - @favorite_recipes.each do |recipe|
-          .d-flex
-            h5.text-break=link_to recipe.name, recipe_path(recipe)
-  .col-lg-8
-    h4 ="#{@user.name}さんの作成レシピ"
+        h5.color_bar.d-inline お気に入りレシピ
+        - if @favorite_recipes.blank?
+          h5.d-inline はありません
+        .container
+          - @favorite_recipes.each do |recipe|
+            .d-flex
+              h5.text-break=link_to recipe.name, recipe_path(recipe)
+  .col-lg-8.mt-4
+    h4.color_bar.d-inline 作成レシピ
+    - if @recipes.blank?
+      h4.d-inline はありません
     = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
