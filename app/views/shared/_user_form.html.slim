@@ -22,3 +22,6 @@
     = f.label :password_confirmation
     = f.password_field :password_confirmation, class: 'form-control'
   = f.submit '登録する', class: 'btn btn-primary'
+
+.d-flex.justify-content-end
+  = link_to 'アカウント削除', user, method: :delete, data: {confirm: "ユーザー「#{user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger' if admin_or_himself?
