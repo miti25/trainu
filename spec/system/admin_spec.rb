@@ -29,6 +29,13 @@ describe '管理者権限' do
         click_on '編集'
         expect(page).to have_current_path edit_user_path(user_a), ignore_query: true
       end
+    end
+
+    context 'ユーザーAの編集ページにて' do
+      before do
+        visit user_path(user_a)
+        click_on '編集'
+      end
 
       it '削除へのリンクが機能する', js: true do
         expect(page).to have_link '削除'
@@ -45,7 +52,7 @@ describe '管理者権限' do
     end
   end
 
-  describe 'adminのレシピの管理機能', type: :system do
+  describe 'adminのレシピの管理機能', type: :system do
     let(:login_user) { user_admin }
 
     context 'Aのレシピ詳細ページにて' do
