@@ -1,21 +1,17 @@
-- provide(:title, "#{@user.name}さん")
-.d-flex
-  h1 = "#{@user.name}"
-  .ml-auto
-    = link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3' if admin_or_himself?
-
-table.table.table-hover
-  tbody
-    tr
-      th= User.human_attribute_name(:name)
-      td= @user.name
-    - if admin_or_himself?
-      tr
-        th= User.human_attribute_name(:email)
-        td= @user.email
-    tr
-      th= User.human_attribute_name(:created_at)
-      td= @user.created_at
-
-.d-flex.justify-content-end
-  = link_to 'アカウント削除', @user, method: :delete, data: {confirm: "ユーザー「#{@user.name}」を削除します、よろしいですか？"}, class: 'btn btn-danger' if admin_or_himself?
+- provide(:title, "#{@user.name}さんのページ")
+.row
+  .col-lg-3.mt-4
+    .card
+      .card-body
+        .d-flex
+          h4.card-title.text-break = @user.name
+          .ml-auto= link_to '編集', edit_user_path(@user), class: 'btn btn-primary mr-3' if admin_or_himself?
+        .text-muted= "登録日: #{@user.created_at.strftime('%F')}"
+      .card-body
+        h5 お気に入りレシピ
+        - @favorite_recipes.each do |recipe|
+          .d-flex
+            h5.text-break=link_to recipe.name, recipe_path(recipe)
+  .col-lg-8
+    h4 ="#{@user.name}さんの作成レシピ"
+    = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
