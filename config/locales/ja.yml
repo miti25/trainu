@@ -14,8 +14,8 @@ ja:
     attributes:
       recipe:
         id: ID
-        name: トレーニング名
-        description: トレーニング概要
+        name: レシピ名
+        description: レシピ概要
         image: 画像
       user:
         id: ID
