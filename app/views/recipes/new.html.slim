@@ -6,5 +6,7 @@
 h4 レシピ名
 .mt-3
   = form_with model: [@recipe], local: true do |f|
-    = f.text_field :name, class: 'form-control', placeholder: '30文字以内'
+    #title_count.text-right.mb-2
+      | 残り30文字
+    = f.text_field :name, class: 'form-control form-control-lg', id: 'recipe_title', placeholder: '30文字以内で入力'
     .text-center= f.submit 'レシピ詳細の入力に進む', class: 'btn btn-primary mt-5'
