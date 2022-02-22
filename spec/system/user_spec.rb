@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'ユーザーの管理機能', type: :system do
-  describe 'サインイン', js: true do
+  describe 'サインアップ', js: true do
     let(:new_user) { build(:user) }
     let(:blank_user) { build(:user, name: '', email: '', password: '') }
     let(:no_confirmation) { build(:user, password_confirmation: 'error_pass') }
@@ -100,6 +100,13 @@ describe 'ユーザーの管理機能', type: :system do
             expect(page).to have_link '編集'
             click_on '編集'
             expect(page).to have_current_path edit_user_path(user_a), ignore_query: true
+          end
+        end
+
+        context 'ユーザーAの編集ページにて' do
+          before do
+            visit user_path(user_a)
+            click_on '編集'
           end
 
           it '削除へのリンクが機能する', js: true do
