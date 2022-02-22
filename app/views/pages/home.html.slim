@@ -1,29 +1,11 @@
-.d-flex.justify-content-center.w-100
-  = link_to 'トレーニングのレシピを投稿する', new_recipe_path, class: 'btn btn-lg btn-primary my-5'
-#search_category
-  .row.mt-5
-    .col-3.mt-4
+.mb-5.w-100
+  .d-flex.justify-content-center
+    = link_to 'トレーニングのレシピを投稿する', new_recipe_path, class: 'btn btn-lg btn-primary my-5'
+.row
+  .col-3.mt-4
+    #search_category
       h5 体の部位から探す
-      - @root_categories.each do |category|
-        ul.list-group class='parent_list'
-          .d-flex
-            div.mr-1 class='category_dropdown'
-              | ▶
-            = link_to category.name, category_recipes_path(category.id)
-          .flex-column.border-left.ml-2 class='child_list' style='display:none;'
-            - category.children.each do |child|
-              li.list-unstyled.list-item class='parent_list'
-                .d-flex.ml-2
-                  -if child.has_children?
-                    div.mr-1 class='category_dropdown'
-                      | ▶
-                  = link_to child.name, category_recipes_path(child.id)
-                ul.list-group
-                  .flex-column.border-left.ml-3 class='child_list' style='display:none;'
-                    - child.children.each do |grand_child|
-                      li.list-unstyled.list-item
-                        .d-flex.ml-2
-                          = link_to grand_child.name, category_recipes_path(grand_child.id)
-    .col
-      h4.color_bar 最新のレシピ
-      = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
+      = render partial: 'search_category', collection: @root_categories, as: :category
+  .col
+    h4.color_bar 最新のレシピ
+    = render partial: '/shared/recipes_list', collection: @recipes, as: :recipe
