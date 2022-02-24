@@ -71,7 +71,10 @@ document.addEventListener('turbolinks:load', function() {
   howtos_description.forEach(function(a){
     a.onkeyup = function(e){
       const max = 100;
-      const word_count = max - e.target.value.length;
+      const text = e.target.value
+      const LF_regex = new RegExp('\\n', 'g');
+      const LF_count = text.match(LF_regex) == null ? 0 : text.match(LF_regex).length
+      const word_count = max - text.length - LF_count
       const counter = e.target.closest('.howto').querySelector('.word_count');
       counter.innerHTML = '残り' + word_count + '文字';
     };

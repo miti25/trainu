@@ -4,13 +4,19 @@ document.addEventListener('turbolinks:load', function() {
   // recipeタイトルカウント
   document.getElementById('recipe_title').onkeyup = function(e){
     const max = 30
-    const word_count = max - e.target.value.length
+    const text = e.target.value
+    const LF_regex = new RegExp('\\n', 'g');
+    const LF_count = text.match(LF_regex) == null ? 0 : text.match(LF_regex).length
+    const word_count = max - text.length - LF_count
     document.getElementById('title_count').innerHTML = '残り' + word_count + '文字'
   };
   // recipe概要カウント
   document.getElementById('recipe_description').onkeyup = function(e){
     const max = 200
-    const word_count = max - e.target.value.length
+    const text = e.target.value
+    const LF_regex = new RegExp('\\n', 'g');
+    const LF_count = text.match(LF_regex) == null ? 0 : text.match(LF_regex).length
+    const word_count = max - text.length - LF_count
     document.getElementById('description_count').innerHTML = '残り' + word_count + '文字'
   };
   // 画像表示要素
