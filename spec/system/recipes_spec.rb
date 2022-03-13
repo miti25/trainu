@@ -129,7 +129,7 @@ describe 'レシピの管理機能', type: :system do
 
           it ' エラー' do
             within '#error_explanation' do
-              expect(page).to have_content 'トレーニング名を入力してください'
+              expect(page).to have_content 'レシピ名を入力してください'
             end
           end
         end
@@ -139,7 +139,7 @@ describe 'レシピの管理機能', type: :system do
 
           it 'エラー' do
             within '#error_explanation' do
-              expect(page).to have_content 'トレーニング名は30文字以内で入力してください'
+              expect(page).to have_content 'レシピ名は30文字以内で入力してください'
             end
           end
         end
