@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @recipes = @user.recipes.includes([:recipe_categories, :categories]).with_attached_image.recent
+    @recipes = @user.recipes.includes(%i[recipe_categories categories]).with_attached_image.recent
     @favorite_recipes = @user.favorite_recipes
   end
 

@@ -1,6 +1,6 @@
 class FavoritesController < ApplicationController
   def index
-    @recipes = current_user.favorite_recipes.includes([:user, :recipe_categories, :categories]).with_attached_image
+    @recipes = current_user.favorite_recipes.includes(%i[user recipe_categories categories]).with_attached_image
   end
 
   def create

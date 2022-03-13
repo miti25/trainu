@@ -26,7 +26,7 @@ class Recipe < ApplicationRecord
 
   def root_categories
     categories = self.categories.uniq
-    categories.delete_if{|str| !(str.root?)}
+    categories.delete_if { |str| !str.root? }
   end
 
   def self.ransackable_scopes(_auth_object = nil)

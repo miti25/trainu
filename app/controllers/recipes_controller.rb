@@ -4,7 +4,7 @@ class RecipesController < ApplicationController
   skip_before_action :login_required, only: %i[show search]
 
   def index
-    @recipes = current_user.recipes.includes([:recipe_categories, :categories]).with_attached_image.recent
+    @recipes = current_user.recipes.includes(%i[recipe_categories categories]).with_attached_image.recent
   end
 
   def show
@@ -66,12 +66,12 @@ class RecipesController < ApplicationController
   end
 
   def search
-    @q = Recipe.([:user, :recipe_categories, :categories]).with_attached_image.ransack(params[:q])
+    @q = Recipe.call(%i[user recipe_categories categories]).with_attached_image.ransack(params[:q])
   end
 
   def category
     @category = Category.find(params[:format])
-    @recipes = @category.recipes.includes([:user, :recipe_categories, :categories]).with_attached_image
+    @recipes = @category.recipes.includes(%i[user recipe_categories categories]).with_attached_image
   end
 
   private
